@@ -1,4 +1,4 @@
-package com.example.mealplanner
+package com.SquareName.mealplanner
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

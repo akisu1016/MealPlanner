@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Meal Planner</string>
-    <string name="title_activity_main2">MainActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_diary">Diary</string>
+    <string name="title_library">library</string>
+    <string name="title_bookmarklist">Bookmarklist</string>
 </resources>

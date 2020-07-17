@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.mealplanner.R
 
-class NotificationsFragment : Fragment() {
+class BookmarklistFragment : Fragment() {
 
-    private lateinit var notificationsViewModel: NotificationsViewModel
+    private lateinit var bookmarklistViewModel: BookmarklistViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        notificationsViewModel =
-            ViewModelProviders.of(this).get(NotificationsViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_notifications, container, false)
-        val textView: TextView = root.findViewById(R.id.text_notifications)
-        notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
+        bookmarklistViewModel =
+            ViewModelProviders.of(this).get(BookmarklistViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_bookmarklist, container, false)
+        val textView: TextView = root.findViewById(R.id.text_bookmarklist)
+        bookmarklistViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root

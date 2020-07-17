@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.mealplanner.R
 
-class DashboardFragment : Fragment() {
+class LibararyFragment : Fragment() {
 
-    private lateinit var dashboardViewModel: DashboardViewModel
+    private lateinit var libraryViewModel: LibraryViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        dashboardViewModel =
-            ViewModelProviders.of(this).get(DashboardViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
+        libraryViewModel =
+            ViewModelProviders.of(this).get(LibraryViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_library, container, false)
+        val textView: TextView = root.findViewById(R.id.text_library)
+        libraryViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root

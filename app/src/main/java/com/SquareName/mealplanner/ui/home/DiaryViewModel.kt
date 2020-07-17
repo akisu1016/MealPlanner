@@ -1,13 +1,13 @@
-package com.example.mealplanner.ui.dashboard
+package com.SquareName.mealplanner.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class LibraryViewModel : ViewModel() {
+class DiaryViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is libarary Fragment"
+        value = "This is diary Fragment"
     }
     val text: LiveData<String> = _text
 }

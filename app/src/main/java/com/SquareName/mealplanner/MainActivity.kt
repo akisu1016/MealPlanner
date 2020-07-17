@@ -1,4 +1,4 @@
-package com.example.mealplanner
+package com.SquareName.mealplanner
 
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView

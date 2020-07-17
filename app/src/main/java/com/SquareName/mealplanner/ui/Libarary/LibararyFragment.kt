@@ -1,4 +1,4 @@
-package com.SquareName.mealplanner.ui.notifications
+package com.SquareName.mealplanner.ui.Libarary
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.SquareName.mealplanner.R
 
-class BookmarklistFragment : Fragment() {
+class LibararyFragment : Fragment() {
 
-    private lateinit var bookmarklistViewModel: BookmarklistViewModel
+    private lateinit var libraryViewModel: LibraryViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        bookmarklistViewModel =
-            ViewModelProviders.of(this).get(BookmarklistViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_bookmarklist, container, false)
-        val textView: TextView = root.findViewById(R.id.text_bookmarklist)
-        bookmarklistViewModel.text.observe(viewLifecycleOwner, Observer {
+        libraryViewModel =
+            ViewModelProviders.of(this).get(LibraryViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_library, container, false)
+        val textView: TextView = root.findViewById(R.id.text_library)
+        libraryViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root

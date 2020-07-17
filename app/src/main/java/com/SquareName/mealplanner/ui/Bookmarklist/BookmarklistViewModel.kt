@@ -1,4 +1,4 @@
-package com.SquareName.mealplanner.ui.notifications
+package com.SquareName.mealplanner.ui.Bookmarklist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -1,4 +1,4 @@
-package com.SquareName.mealplanner.ui.home
+package com.SquareName.mealplanner.ui.Diary
 
 import android.os.Bundle
 import android.view.LayoutInflater

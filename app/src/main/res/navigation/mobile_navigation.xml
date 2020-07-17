@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_diary"
-        android:name="com.example.mealplanner.ui.home.DiaryFragment"
+        android:name="com.SquareName.mealplanner.ui.Libarary.LibararyFragment"
         android:label="@string/title_diary"
         tools:layout="@layout/fragment_diary" />
 
     <fragment
         android:id="@+id/navigation_library"
-        android:name="com.example.mealplanner.ui.dashboard.LibararyFragment"
+        android:name="com.SquareName.mealplanner.ui.Libarary.LibararyFragment"
         android:label="@string/title_library"
         tools:layout="@layout/fragment_library" />
 
     <fragment
         android:id="@+id/navigation_bookmarklist"
-        android:name="com.example.mealplanner.ui.notifications.BookmarklistFragment"
+        android:name="com.SquareName.mealplanner.ui.Libarary.LibararyFragment"
         android:label="@string/title_bookmarklist"
         tools:layout="@layout/fragment_bookmarklist" />
 </navigation>

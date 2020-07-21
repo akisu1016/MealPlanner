@@ -34,6 +34,7 @@
     <SearchView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:iconifiedByDefault="false"
         android:queryHint="食材名・レシピ名を入力"
         app:layout_constraintBottom_toTopOf="@+id/nav_view"
         app:layout_constraintEnd_toEndOf="parent"

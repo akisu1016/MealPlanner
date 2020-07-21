@@ -1,6 +1,7 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+<!--    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">--> //デフォルト
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">//タイトルバー無し
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/md_deep_orange_500</item>
         <item name="colorPrimaryDark">@color/md_deep_orange_200</item>

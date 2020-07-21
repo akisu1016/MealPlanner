@@ -22,4 +22,20 @@
         android:name="com.SquareName.mealplanner.ui.Bookmarklist.BookmarklistFragment"
         android:label="@string/title_bookmarklist"
         tools:layout="@layout/fragment_bookmarklist" />
+<!--android:label消していいかも？-->
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_diary"-->
+<!--        android:name="com.SquareName.mealplanner.ui.Diary.DiaryFragment"-->
+<!--        tools:layout="@layout/fragment_diary" />-->
+
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_library"-->
+<!--        android:name="com.SquareName.mealplanner.ui.Libarary.LibararyFragment"-->
+<!--        tools:layout="@layout/fragment_library" />-->
+
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_bookmarklist"-->
+<!--        android:name="com.SquareName.mealplanner.ui.Bookmarklist.BookmarklistFragment"-->
+<!--        tools:layout="@layout/fragment_bookmarklist" />-->
+
 </navigation>

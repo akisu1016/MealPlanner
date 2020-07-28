@@ -6,8 +6,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.os.ParcelFileDescriptor
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -18,8 +16,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.SquareName.mealplanner.tflite.Classifier
 import com.SquareName.mealplanner.tflite.Classifier.create
-import com.SquareName.mealplanner.ui.Libarary.LibararyFragment
-import kotlinx.android.synthetic.main.fragment_library.*
+import com.SquareName.mealplanner.ui.Library.LibraryFragment
 import java.io.FileDescriptor
 import java.io.IOException
 
@@ -27,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var imageView: ImageView
     private lateinit var textView: TextView
     private lateinit var classifier: Classifier
-    private lateinit var Libarary: LibararyFragment
+    private lateinit var library: LibraryFragment
     val RESULT_IMAGEFILE = 1001
     val RESULT_CAMERAFILE = 1002
 
@@ -49,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         try {
-            Libarary = LibararyFragment()
+            library = LibraryFragment()
             classifier = create(this, Classifier.Device.CPU, 2)
         } catch (e: IOException) {
             e.printStackTrace()
@@ -62,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         val newRequestCode = requestCode and 0xffff
         lateinit var results:List<Classifier.Recognition>
         var text: String? = ""
-        textView = findViewById<TextView>(R.id.resulttextView)
+        textView = findViewById<TextView>(R.id.result_textView)
         imageView = findViewById<ImageView>(R.id.imageView)
 
         //終了リザルトが画像選択アクテビティ
@@ -94,7 +91,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        this.resulttextView.text = text
+        this.textView.text = text
     }
 
 

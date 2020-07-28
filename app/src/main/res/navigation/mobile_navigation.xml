@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navigation_library"
-        android:name="com.SquareName.mealplanner.ui.Libarary.LibararyFragment"
+        android:name="com.SquareName.mealplanner.ui.Library.LibraryFragment"
         android:label="@string/title_library"
         tools:layout="@layout/fragment_library" />
 

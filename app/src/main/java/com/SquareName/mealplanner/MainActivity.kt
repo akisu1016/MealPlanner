@@ -60,6 +60,8 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
         super.onActivityResult(requestCode, resultCode, resultData)
         val newRequestCode = requestCode and 0xffff
+        lateinit var results:List<Classifier.Recognition>
+        var text: String? = ""
         textView = findViewById<TextView>(R.id.resulttextView)
         imageView = findViewById<ImageView>(R.id.imageView)
 
@@ -73,19 +75,9 @@ class MainActivity : AppCompatActivity() {
 
             this.imageView.setImageBitmap(resizeImage(bmp))
 
-            var results =
+            results =
                 classifier.recognizeImage(resizeImage(bmp), 1)
-            var text: String? = ""
-
-            for (result in results) {
-                val title = result.title
-                text += """
-                                    $title
-
-                                    """.trimIndent()
-                Log.d("array", title)
-            }
-            textView.text = text
+            text = results[0].title
 
         //終了リザルトがカメラアクテビティ
         } else if (newRequestCode == RESULT_CAMERAFILE && resultCode == Activity.RESULT_OK && resultData != null) {
@@ -96,22 +88,13 @@ class MainActivity : AppCompatActivity() {
                 bmp = resultData.extras!!["data"] as Bitmap
 
                 this.imageView.setImageBitmap(resizeImage(bmp))
-
-                var results =
+                results =
                     classifier.recognizeImage(resizeImage(bmp), 1)
-                var text: String? = ""
-
-                for (result in results) {
-                    val title = result.title
-                    text += """
-                                    $title
-
-                                    """.trimIndent()
-                    Log.d("array", title)
-                }
-                this.resulttextView.text = text
+                text += results[0].title
             }
         }
+
+        this.resulttextView.text = text
     }
 
 

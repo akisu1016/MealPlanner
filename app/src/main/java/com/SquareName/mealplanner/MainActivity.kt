@@ -95,30 +95,30 @@ class MainActivity : AppCompatActivity() {
         textView = findViewById<TextView>(R.id.result_textView)
         imageView = findViewById<ImageView>(R.id.imageView)
 
-        //終了リザルトが画像選択アクテビティ
-        if (newRequestCode == RESULT_IMAGEFILE && resultCode == Activity.RESULT_OK && resultData != null) {
-            var uri: Uri? = resultData.data
-            var pfDescriptor = getContentResolver().openFileDescriptor(uri!!, "r")
-            val fileDescriptor: FileDescriptor = pfDescriptor!!.fileDescriptor
-            bmp = BitmapFactory.decodeFileDescriptor(fileDescriptor)
-            pfDescriptor.close()
+        if(resultCode == Activity.RESULT_OK && resultData != null){
+            //終了リザルトが画像選択アクテビティ
+            if (newRequestCode == RESULT_IMAGEFILE) {
+                var uri: Uri? = resultData.data
+                var pfDescriptor = getContentResolver().openFileDescriptor(uri!!, "r")
+                val fileDescriptor: FileDescriptor = pfDescriptor!!.fileDescriptor
+                bmp = BitmapFactory.decodeFileDescriptor(fileDescriptor)
+                pfDescriptor.close()
 
-        //終了リザルトがカメラアクテビティ
-        } else if (newRequestCode == RESULT_CAMERAFILE && resultCode == Activity.RESULT_OK && resultData != null) {
-            if (resultData.extras == null) {
-                return
-            } else {
-                bmp = resultData.extras!!["data"] as Bitmap
+                //終了リザルトがカメラアクテビティ
+            } else if (newRequestCode == RESULT_CAMERAFILE) {
+                if (resultData.extras == null) {
+                    return
+                } else {
+                    bmp = resultData.extras!!["data"] as Bitmap
+                }
             }
-        }
-
-        if(resultCode == Activity.RESULT_OK){
             this.imageView.setImageBitmap(resizeImage(bmp))
             results =
                 classifier.recognizeImage(resizeImage(bmp), 1)
             text += results[0].title
             this.textView.text = text
         }
+
     }
 
     //ビットマップイメージをリサイズ

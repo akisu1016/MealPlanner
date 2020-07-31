@@ -112,11 +112,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        this.imageView.setImageBitmap(resizeImage(bmp))
-        results =
-            classifier.recognizeImage(resizeImage(bmp), 1)
-        text += results[0].title
-        this.textView.text = text
+        if(resultCode == Activity.RESULT_OK){
+            this.imageView.setImageBitmap(resizeImage(bmp))
+            results =
+                classifier.recognizeImage(resizeImage(bmp), 1)
+            text += results[0].title
+            this.textView.text = text
+        }
     }
 
     //ビットマップイメージをリサイズ

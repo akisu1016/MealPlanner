@@ -6,19 +6,20 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.view.Menu
 import android.widget.ImageView
 import android.widget.TextView
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.appcompat.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.SquareName.mealplanner.tflite.Classifier
 import com.SquareName.mealplanner.tflite.Classifier.create
 import com.SquareName.mealplanner.ui.Library.LibraryFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.io.FileDescriptor
 import java.io.IOException
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var imageView: ImageView
@@ -33,8 +34,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
-
         val navController = findNavController(R.id.nav_host_fragment)
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
 ////タイトルバー表示
@@ -54,7 +55,37 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //アクションバーの設定
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.actionbar, menu)
 
+        supportActionBar?.title = ""
+        val seachItem = menu.findItem(R.id.menu_search)
+        val searchView = seachItem.actionView as SearchView
+        searchView.setQueryHint("食材名・レシピ名を入力")
+        searchView.setIconifiedByDefault(false)
+        searchView.clearFocus()
+
+        //searchViewのリスナー
+        searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+            //検索ボタンを押した
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+            //テキストに変更がかかった
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText!!.isNotEmpty()){
+
+                }else{
+
+                }
+                return true
+            }
+        })
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    //別アクティビティから戻ってきたときの処理　リクエストコードで認識する
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
         super.onActivityResult(requestCode, resultCode, resultData)
         val newRequestCode = requestCode and 0xffff

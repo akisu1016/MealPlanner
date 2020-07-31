@@ -7,7 +7,8 @@
         android:title="Search"
         android:visible="true"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom"
+        android:focusableInTouchMode="true"/>
     <item
         android:id="@+id/menu_info"
         android:icon="@android:drawable/ic_menu_manage"

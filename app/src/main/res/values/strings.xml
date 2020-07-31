@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Meal Planner</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="title_diary">Diary</string>
-    <string name="title_library">library</string>
-    <string name="title_bookmarklist">Bookmarklist</string>
+    <string name="title_home">ホーム</string>
+    <string name="title_library">画像</string>
+    <string name="title_bookmarklist">ブックマーク</string>
     <string-array name="URL">
         <item>https://www.google.com/</item>
         <item>http://yakkun.com</item>

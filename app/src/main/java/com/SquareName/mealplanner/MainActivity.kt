@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity() {
             text += results[0].title
             this.textView.text = text
         }
-
+        this.textView.requestFocus()
     }
 
     //ビットマップイメージをリサイズ

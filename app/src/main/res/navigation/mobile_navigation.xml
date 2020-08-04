@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/navigation_diary"
-        android:name="com.SquareName.mealplanner.ui.Diary.DiaryFragment"
-        android:label="@string/title_diary"
-        tools:layout="@layout/fragment_diary" />
+        android:name="com.SquareName.mealplanner.ui.Recyclerview.RecycleviewFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_recyclerview" />
 
     <fragment
         android:id="@+id/navigation_library"

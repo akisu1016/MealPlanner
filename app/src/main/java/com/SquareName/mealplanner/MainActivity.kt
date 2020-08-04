@@ -89,43 +89,37 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
         super.onActivityResult(requestCode, resultCode, resultData)
         val newRequestCode = requestCode and 0xffff
+        lateinit var bmp: Bitmap
         lateinit var results:List<Classifier.Recognition>
         var text: String? = ""
         textView = findViewById<TextView>(R.id.result_textView)
         imageView = findViewById<ImageView>(R.id.imageView)
 
-        //終了リザルトが画像選択アクテビティ
-        if (newRequestCode == RESULT_IMAGEFILE && resultCode == Activity.RESULT_OK && resultData != null) {
-            var uri: Uri? = resultData.data
-            var pfDescriptor = getContentResolver().openFileDescriptor(uri!!, "r")
-            val fileDescriptor: FileDescriptor = pfDescriptor!!.fileDescriptor
-            val bmp = BitmapFactory.decodeFileDescriptor(fileDescriptor)
-            pfDescriptor.close()
+        if(resultCode == Activity.RESULT_OK && resultData != null){
+            //終了リザルトが画像選択アクテビティ
+            if (newRequestCode == RESULT_IMAGEFILE) {
+                var uri: Uri? = resultData.data
+                var pfDescriptor = getContentResolver().openFileDescriptor(uri!!, "r")
+                val fileDescriptor: FileDescriptor = pfDescriptor!!.fileDescriptor
+                bmp = BitmapFactory.decodeFileDescriptor(fileDescriptor)
+                pfDescriptor.close()
 
+                //終了リザルトがカメラアクテビティ
+            } else if (newRequestCode == RESULT_CAMERAFILE) {
+                if (resultData.extras == null) {
+                    return
+                } else {
+                    bmp = resultData.extras!!["data"] as Bitmap
+                }
+            }
             this.imageView.setImageBitmap(resizeImage(bmp))
-
             results =
                 classifier.recognizeImage(resizeImage(bmp), 1)
-            text = results[0].title
-
-        //終了リザルトがカメラアクテビティ
-        } else if (newRequestCode == RESULT_CAMERAFILE && resultCode == Activity.RESULT_OK && resultData != null) {
-            val bmp: Bitmap
-            if (resultData.extras == null) {
-                return
-            } else {
-                bmp = resultData.extras!!["data"] as Bitmap
-
-                this.imageView.setImageBitmap(resizeImage(bmp))
-                results =
-                    classifier.recognizeImage(resizeImage(bmp), 1)
-                text += results[0].title
-            }
+            text += results[0].title
+            this.textView.text = text
         }
-
-        this.textView.text = text
+        this.textView.requestFocus()
     }
-
 
     //ビットマップイメージをリサイズ
     fun resizeImage(bmp: Bitmap): Bitmap {
@@ -150,6 +144,5 @@ class MainActivity : AppCompatActivity() {
             Bitmap.createScaledBitmap(bmp, width, height, false)
 
         return croppedBitmap
-
     }
 }

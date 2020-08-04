@@ -1,9 +1,14 @@
 package com.SquareName.mealplanner
 
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class WebViewActivity : AppCompatActivity() {
@@ -21,12 +26,26 @@ class WebViewActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 //        supportActionBar?.setHomeButtonEnabled(true)
-        supportActionBar?.setTitle("読み込み中")
+
 
 
         myWebView.setWebViewClient(object : WebViewClient() {
+
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                supportActionBar?.setTitle("読み込み中")
+            }
+
             override fun onPageFinished(view: WebView, url: String) {
+                Log.d("URL", url)
                 supportActionBar?.setTitle(view.title)
+            }
+
+            override fun onReceivedError(
+                view: WebView?,
+                request: WebResourceRequest?,
+                error: WebResourceError?
+            ) {
+                finish()
             }
         })
     }

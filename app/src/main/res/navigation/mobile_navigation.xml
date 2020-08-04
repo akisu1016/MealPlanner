@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_diary"
-        android:name="com.SquareName.mealplanner.ui.Diary.DiaryFragment"
+        android:name="com.SquareName.mealplanner.ui.Diary.RecyFragment"
         android:label="@string/title_diary"
         tools:layout="@layout/fragment_diary" />
 

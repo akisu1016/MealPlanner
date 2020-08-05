@@ -6,24 +6,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebView
-import android.webkit.WebViewClient
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.SquareName.mealplanner.GetRecipe.Item
-import com.SquareName.mealplanner.GetRecipe.RecipeInterface
 import com.SquareName.mealplanner.GetRecipe.createService
 import com.SquareName.mealplanner.R
 import com.SquareName.mealplanner.WebViewActivity
-import kotlinx.android.synthetic.main.list_item.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
-class RecycleviewFragment : Fragment(){
+class RecycleviewFragment : Fragment() {
 
     private val recipeInterface by lazy { createService() }
 
@@ -54,11 +49,16 @@ class RecycleviewFragment : Fragment(){
                         Log.d("fetchItems", "response success")
 
                         //ここにRicycleviewの処理
-                        viewAdapter = RecyclerAdapter(it, object : RecyclerAdapter.OnItemClickListener{
-                            override fun onItemClick(view: View, position: Int, clickedText: String) {
-                                ItemClick(view, position, clickedText)
-                            }
-                        })
+                        viewAdapter =
+                            RecyclerAdapter(it, object : RecyclerAdapter.OnItemClickListener {
+                                override fun onItemClick(
+                                    view: View,
+                                    position: Int,
+                                    clickedText: String
+                                ) {
+                                    ItemClick(view, position, clickedText)
+                                }
+                            })
                         viewManager = LinearLayoutManager(context)
 
                         with(root) {

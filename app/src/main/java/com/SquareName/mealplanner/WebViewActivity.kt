@@ -36,7 +36,6 @@ class WebViewActivity : AppCompatActivity() {
             }
 
             override fun onPageFinished(view: WebView, url: String) {
-                Log.d("URL", url)
                 supportActionBar?.setTitle(view.title)
             }
 

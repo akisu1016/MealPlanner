@@ -1,16 +1,17 @@
 package com.SquareName.mealplanner.ui.Recyclerview
 
-import android.content.Context
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.SquareName.mealplanner.GetRecipe.Item
 import com.SquareName.mealplanner.R
-import kotlinx.android.synthetic.main.list_item.view.*
 
 
-class RecyclerAdapter(private val customList: Array<String>, private val listener: OnItemClickListener) : RecyclerView.Adapter<RecyclerViewHolder>(){
+class RecyclerAdapter(
+    private val customList: List<Item>,
+    private val listener: OnItemClickListener
+) : RecyclerView.Adapter<RecyclerViewHolder>() {
 
     // getItemCount onCreateViewHolder onBindViewHolderを実装
     // 上記のViewHolderクラスを使ってViewHolderを作成
@@ -28,9 +29,9 @@ class RecyclerAdapter(private val customList: Array<String>, private val listene
     // ViewHolderに表示する画像とテキストを挿入
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         holder.itemImageView.setImageResource(R.mipmap.ic_launcher_round)
-        holder.itemTextView.text = customList[position]
+        holder.itemTextView.text = customList[position].title
         holder.itemView.setOnClickListener {
-            listener.onItemClick(it, position, customList[position])
+            listener.onItemClick(it, position, customList[position].url)
         }
     }
 

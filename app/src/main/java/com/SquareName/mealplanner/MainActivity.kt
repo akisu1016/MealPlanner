@@ -98,28 +98,28 @@ class MainActivity : AppCompatActivity() {
         textView = findViewById(R.id.result_textView)
         imageView = findViewById(R.id.imageView)
 
-        if(resultCode == Activity.RESULT_OK && resultData != null){
-            //終了リザルトが画像選択アクテビティ
-            if (newRequestCode == RESULT_IMAGEFILE) {
-                var uri: Uri? = resultData.data
-                var pfDescriptor = getContentResolver().openFileDescriptor(uri!!, "r")
-                val fileDescriptor: FileDescriptor = pfDescriptor!!.fileDescriptor
-                bmp = BitmapFactory.decodeFileDescriptor(fileDescriptor)
-                pfDescriptor.close()
+        resultData?.let { resultData ->
+            if (resultCode == Activity.RESULT_OK) {
+                //終了リザルトが画像選択アクテビティ
+                if (newRequestCode == RESULT_IMAGEFILE) {
+                    var uri: Uri? = resultData.data
+                    var pfDescriptor = contentResolver.openFileDescriptor(uri!!, "r")
+                    val fileDescriptor: FileDescriptor = pfDescriptor!!.fileDescriptor
+                    bmp = BitmapFactory.decodeFileDescriptor(fileDescriptor)
+                    pfDescriptor.close()
 
-                //終了リザルトがカメラアクテビティ
-            } else if (newRequestCode == RESULT_CAMERAFILE) {
-                if (resultData.extras == null) {
-                    return
-                } else {
-                    bmp = resultData.extras!!["data"] as Bitmap
+                    //終了リザルトがカメラアクテビティ
+                } else if (newRequestCode == RESULT_CAMERAFILE) {
+                    resultData.extras?.let {
+                        bmp = it["data"] as Bitmap
+                    }
                 }
+                this.imageView.setImageBitmap(resizeImage(bmp))
+                results =
+                    classifier.recognizeImage(resizeImage(bmp), 1)
+                text += results[0].title
+                this.textView.text = text
             }
-            this.imageView.setImageBitmap(resizeImage(bmp))
-            results =
-                classifier.recognizeImage(resizeImage(bmp), 1)
-            text += results[0].title
-            this.textView.text = text
         }
         this.textView.requestFocus()
     }

@@ -19,9 +19,11 @@ class WebViewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_web_view)
 
         myWebView = findViewById(R.id.webview)
-        myWebView.settings.javaScriptEnabled = true
-        myWebView.webViewClient = WebViewClient()
-        myWebView.loadUrl(intent.getStringExtra("url"))
+        myWebView.run {
+            settings.javaScriptEnabled = true
+            webViewClient = WebViewClient()
+            loadUrl(intent.getStringExtra("url"))
+        }
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 //        supportActionBar?.setHomeButtonEnabled(true)
@@ -59,7 +61,9 @@ class WebViewActivity : AppCompatActivity() {
 
     //戻るボタン
     override fun onBackPressed() {
-        if (myWebView != null && myWebView.canGoBack()) myWebView.goBack()
-        else super.onBackPressed()
+        myWebView?.let {
+            if (it.canGoBack()) it.goBack()
+            else super.onBackPressed()
+        } ?: super.onBackPressed()
     }
 }

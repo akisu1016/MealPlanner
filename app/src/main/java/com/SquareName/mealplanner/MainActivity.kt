@@ -9,8 +9,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.SquareName.mealplanner.tflite.Classifier
@@ -36,15 +36,15 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
 
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-////タイトルバー表示
-//        val appBarConfiguration = AppBarConfiguration(
-//            setOf(
-//                R.id.navigation_diary, R.id.navigation_library, R.id.navigation_bookmarklist
-//            )
-//        )
-//        setupActionBarWithNavController(navController, appBarConfiguration)
+        // 各メニューIDを一連のIDとして渡すと、
+        // メニューは最上位の目的地と見なされます。
+        /*//タイトルバー表示
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_diary, R.id.navigation_library, R.id.navigation_bookmarklist
+            )
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration) */
         navView.setupWithNavController(navController)
 
         try {
@@ -69,16 +69,17 @@ class MainActivity : AppCompatActivity() {
         }
 
         //searchViewのリスナー
-        searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             //検索ボタンを押した
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return true
             }
+
             //テキストに変更がかかった
             override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText!!.isNotEmpty()){
+                if (newText!!.isNotEmpty()) {
 
-                }else{
+                } else {
 
                 }
                 return true
@@ -92,10 +93,10 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, resultData)
         val newRequestCode = requestCode and 0xffff
         lateinit var bmp: Bitmap
-        lateinit var results:List<Classifier.Recognition>
+        lateinit var results: List<Classifier.Recognition>
         var text: String? = ""
-        textView = findViewById<TextView>(R.id.result_textView)
-        imageView = findViewById<ImageView>(R.id.imageView)
+        textView = findViewById(R.id.result_textView)
+        imageView = findViewById(R.id.imageView)
 
         if(resultCode == Activity.RESULT_OK && resultData != null){
             //終了リザルトが画像選択アクテビティ
@@ -127,18 +128,18 @@ class MainActivity : AppCompatActivity() {
     fun resizeImage(bmp: Bitmap): Bitmap {
         var height = bmp.height
         var width = bmp.width
+        var i = 2
         while (true) {
-            var i = 2
             if (width < 500 && height < 500) {
                 break
             } else {
                 if (width > 500 || height > 500) {
-                    width = width / i
-                    height = height / i
+                    width /= i
+                    height /= i
+                    i++
                 } else {
                     break
                 }
-                i++
             }
         }
 

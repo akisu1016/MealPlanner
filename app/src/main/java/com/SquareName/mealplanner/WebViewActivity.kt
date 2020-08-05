@@ -8,7 +8,6 @@ import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class WebViewActivity : AppCompatActivity() {
@@ -28,8 +27,7 @@ class WebViewActivity : AppCompatActivity() {
 //        supportActionBar?.setHomeButtonEnabled(true)
 
 
-
-        myWebView.setWebViewClient(object : WebViewClient() {
+        myWebView.webViewClient = object : WebViewClient() {
 
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 supportActionBar?.title = getString(R.string.loading)
@@ -37,7 +35,7 @@ class WebViewActivity : AppCompatActivity() {
 
             override fun onPageFinished(view: WebView, url: String) {
                 Log.d("URL", url)
-                supportActionBar?.setTitle(view.title)
+                supportActionBar?.title = view.title
             }
 
             override fun onReceivedError(
@@ -47,12 +45,12 @@ class WebViewActivity : AppCompatActivity() {
             ) {
                 finish()
             }
-        })
+        }
     }
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id: Int = item.getItemId()
+        val id: Int = item.itemId
         if (id == android.R.id.home) {
             finish() //Activityを閉じる
         }

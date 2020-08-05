@@ -62,9 +62,11 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.title = ""
         val seachItem = menu.findItem(R.id.menu_search)
         val searchView = seachItem.actionView as SearchView
-        searchView.setQueryHint("食材名・レシピ名を入力")
-        searchView.setIconifiedByDefault(false)
-        searchView.clearFocus()
+        searchView.run {
+            queryHint = context.getString(R.string.searchHint)
+            setIconifiedByDefault(false)
+            clearFocus()
+        }
 
         //searchViewのリスナー
         searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{

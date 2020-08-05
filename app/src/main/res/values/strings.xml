@@ -4,6 +4,14 @@
     <string name="title_home">ホーム</string>
     <string name="title_library">画像</string>
     <string name="title_bookmarklist">ブックマーク</string>
+    <string name="info">Info</string>
+    <string name="search">Search</string>
+    <string name="bookmark">ブックマーク</string>
+    <string name="record">記録する</string>
+    <string name="selectPicture">画像を選択</string>
+    <string name="takeCamera">カメラで撮影</string>
+    <string name="loading">読み込み中</string>
+    <string name="searchHint">食材名・レシピ名を入力</string>
     <string-array name="URL">
         <item>https://www.google.com/</item>
         <item>http://yakkun.com</item>

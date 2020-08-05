@@ -32,7 +32,7 @@ class WebViewActivity : AppCompatActivity() {
         myWebView.setWebViewClient(object : WebViewClient() {
 
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                supportActionBar?.setTitle("読み込み中")
+                supportActionBar?.title = getString(R.string.loading)
             }
 
             override fun onPageFinished(view: WebView, url: String) {

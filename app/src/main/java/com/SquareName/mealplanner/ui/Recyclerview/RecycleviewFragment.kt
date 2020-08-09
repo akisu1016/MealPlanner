@@ -12,10 +12,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.SquareName.mealplanner.GetRecipe.Item
 import com.SquareName.mealplanner.GetRecipe.createService
 import com.SquareName.mealplanner.R
+import com.SquareName.mealplanner.Realms.Task
 import com.SquareName.mealplanner.WebViewActivity
+import io.realm.Realm
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 
 class RecycleviewFragment : Fragment() {
@@ -26,6 +29,10 @@ class RecycleviewFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
+
+    private val realm: Realm by lazy {
+        Realm.getDefaultInstance()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,7 +54,6 @@ class RecycleviewFragment : Fragment() {
                     response.body()?.let {
                         // Log表示(成功)
                         Log.d("fetchItems", "response success")
-
                         //ここにRicycleviewの処理
                         viewAdapter =
                             RecyclerAdapter(it, object : RecyclerAdapter.OnItemClickListener {
@@ -57,6 +63,9 @@ class RecycleviewFragment : Fragment() {
                                     clickedText: String
                                 ) {
                                     ItemClick(view, position, clickedText)
+                                    deleteAll()
+                                    create("gazou:", "namae", clickedText,"zairyo")
+                                    Log.d("DB InputCheck",realm.where(Task::class.java).findAll().toString())
                                 }
                             })
                         viewManager = LinearLayoutManager(context)
@@ -132,6 +141,30 @@ class RecycleviewFragment : Fragment() {
         val intent = Intent(activity, WebViewActivity::class.java)
         intent.putExtra("url", url)
         this.startActivity(intent)
+    }
+
+    fun create(imageId:String = "", recipeName:String = "", recipeUrl:String="", meal:String=""){
+        realm.executeTransaction {
+            var task = realm.createObject(Task::class.java , UUID.randomUUID().toString())
+            task.imageId = imageId
+            task.recipeName = recipeName
+            task.recipeUrl = recipeUrl
+            task.meal = meal
+        }
+    }
+
+    fun delete(id: String) {
+        realm.executeTransaction {
+            val task = realm.where(Task::class.java).equalTo("id", id).findFirst()
+                ?: return@executeTransaction
+            task.deleteFromRealm()
+        }
+    }
+
+    fun deleteAll() {
+        realm.executeTransaction {
+            realm.deleteAll()
+        }
     }
 
 }

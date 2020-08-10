@@ -1,10 +1,8 @@
-package com.squarename.mealplanner.ui.Diary
+package com.squarename.mealplanner.ui.diary
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.view.GestureDetector.SimpleOnGestureListener
 import android.widget.TextView

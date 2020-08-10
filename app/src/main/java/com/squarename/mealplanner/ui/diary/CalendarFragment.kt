@@ -1,7 +1,8 @@
-package com.squarename.mealplanner.ui.Diary
+package com.squarename.mealplanner.ui.diary
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,26 +19,24 @@ import kotlinx.android.synthetic.main.list_item.view.*
 import java.util.*
 
 
-class CalendarFragment : Fragment() {
+class CalendarFragment(position: Int) : Fragment() {
 
     private lateinit var binding: FragmenrtCalendarRecyclerviewBinding
-
+    val position = position
+    var items = listOf<Item>()
     //RecycleView格納変数
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
 
     //日付格納変数
+    val default = Int.MAX_VALUE / 2
     val weekdays: Array<String> = arrayOf("日", "月", "火", "水", "木", "金", "土")
     var calendar = Calendar.getInstance()
-    var year = calendar[Calendar.YEAR]
-    var month = calendar[Calendar.MONTH] + 1
-    var day = calendar[Calendar.DATE]
-    val minDay = 1
-    var week = calendar[Calendar.DAY_OF_WEEK] - 1
-    val maxDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
-    val blankDays = calendar.get(Calendar.DAY_OF_WEEK)
-    val dayArray: MutableList<String> = mutableListOf()
+    var year = null
+    var month = null
+    var day = null
+    var week = null
 
 
 
@@ -47,35 +46,39 @@ class CalendarFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 //        val root = inflater.inflate(R.layout.fragmenrt_calendar_recyclerview, container, false)
-
         binding = DataBindingUtil.inflate(inflater, R.layout.fragmenrt_calendar_recyclerview, container, false)
-        binding.data = DiaryData()
+//        val diaryData = DiaryData()
+//        binding.calendardata = diaryData
+        calendar.add(Calendar.DATE, position - default)
+        var year = calendar[Calendar.YEAR]
+        var month = calendar[Calendar.MONTH] + 1
+        var day = calendar[Calendar.DATE]
+        var week = calendar[Calendar.DAY_OF_WEEK] - 1
+        binding.daylabel.text = "${year}年${month}月${day}日 ${weekdays[week]}曜日"
+
+        items = listOf(
+            Item("1", "title", "hogehoge"),
+            Item("2", "title", "hugahuga")
+        )
 
 
-//        tems = listOf(
-//            Item("1", "title", "hogehoge"),
-//            Item("2", "title", "hugahuga")
-//        )
+        if(items != null){
+            viewAdapter = RecyclerAdapter(items!!, object : RecyclerAdapter.OnItemClickListener{
+                override fun onItemClick(view: View, position: Int, clickedText: String) {
+                    ItemClick(view, position)
+                }
+            })
+            viewManager = LinearLayoutManager(context)
 
-
-
-//        if(items != null){
-//            viewAdapter = RecyclerAdapter(items!!, object : RecyclerAdapter.OnItemClickListener{
-//                override fun onItemClick(view: View, position: Int, clickedText: String) {
-//                    ItemClick(view, position)
-//                }
-//            })
-//            viewManager = LinearLayoutManager(context)
-//
-//            with(binding.root) {
-//                recyclerView = findViewById<RecyclerView>(R.id.my_recycler_view).apply {
-//                    // 1.adapterにセット
-//                    adapter = viewAdapter
-//                    // 2.LayoutMangerをセット
-//                    layoutManager = viewManager
-//                }
-//            }
-//        }
+            with(binding.root) {
+                recyclerView = findViewById<RecyclerView>(R.id.my_recycler_view).apply {
+                    // 1.adapterにセット
+                    adapter = viewAdapter
+                    // 2.LayoutMangerをセット
+                    layoutManager = viewManager
+                }
+            }
+        }
 
         return binding.root
     }

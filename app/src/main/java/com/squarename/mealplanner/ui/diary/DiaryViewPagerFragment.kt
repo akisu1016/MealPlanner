@@ -1,18 +1,16 @@
-package com.squarename.mealplanner.ui.Diary
+package com.squarename.mealplanner.ui.diary
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.squarename.mealplanner.R
+import com.squarename.mealplanner.databinding.FragmentDiaryViewpagerBinding
 import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.fragmenrt_calendar_recyclerview.view.*
-import kotlinx.android.synthetic.main.fragment_diary_viewpager.view.*
 
 class DiaryViewPagerFragment : Fragment() {
 
@@ -20,7 +18,8 @@ class DiaryViewPagerFragment : Fragment() {
 
     private lateinit var fragmentstateadapter: FragmentStateAdapter
     private lateinit var viewPager: ViewPager2
-    private lateinit var tabLayout: TabLayout
+    private lateinit var binding: FragmentDiaryViewpagerBinding
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,13 +27,15 @@ class DiaryViewPagerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        val root = inflater.inflate(R.layout.fragment_diary_viewpager, container, false)
-        val tab = inflater.inflate(R.layout.fragmenrt_calendar_recyclerview,container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_diary_viewpager, container, false)
+//        val root = inflater.inflate(R.layout.fragment_diary_viewpager, container, false)
 
-        viewPager = root.findViewById(R.id.pager)
+//        viewPager = root.findViewById(R.id.pager)
         fragmentstateadapter = PagerAdapter(this)
-        viewPager.adapter = fragmentstateadapter
-        viewPager.setCurrentItem(Int.MAX_VALUE / 2, true)
+//        viewPager.adapter = fragmentstateadapter
+        binding.pager.adapter = fragmentstateadapter
+//        viewPager.setCurrentItem(Int.MAX_VALUE / 2, true)
+        binding.pager.setCurrentItem(Int.MAX_VALUE / 2, true)
 
 
 //        val tabLayout = tab.findViewById<TabLayout>(R.id.tab_layout)
@@ -42,7 +43,7 @@ class DiaryViewPagerFragment : Fragment() {
 //            tab.text = "${weekdays[position]}"
 //        }.attach()
 
-        return root
+        return binding.root
     }
     
 

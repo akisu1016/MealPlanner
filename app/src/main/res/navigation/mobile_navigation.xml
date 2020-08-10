@@ -22,6 +22,13 @@
         android:name="com.SquareName.mealplanner.ui.Bookmarklist.BookmarklistFragment"
         android:label="@string/title_bookmarklist"
         tools:layout="@layout/fragment_bookmarklist" />
+
+    <!--  非表示の検索用フラグメント  -->
+    <fragment
+        android:id="@+id/visible_search"
+        android:name="com.SquareName.mealplanner.ui.Recyclerview.RecycleviewFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_recyclerview" />
 <!--android:label消していいかも？-->
 <!--    <fragment-->
 <!--        android:id="@+id/navigation_diary"-->

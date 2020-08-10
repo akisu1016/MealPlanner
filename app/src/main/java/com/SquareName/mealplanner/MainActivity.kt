@@ -11,11 +11,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.SquareName.mealplanner.tflite.Classifier
 import com.SquareName.mealplanner.tflite.Classifier.create
+import com.SquareName.mealplanner.ui.Bookmarklist.BookmarklistFragment
 import com.SquareName.mealplanner.ui.Library.LibraryFragment
+import com.SquareName.mealplanner.ui.Recyclerview.RecycleviewFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.io.FileDescriptor
 import java.io.IOException
@@ -53,6 +56,9 @@ class MainActivity : AppCompatActivity() {
         } catch (e: IOException) {
             e.printStackTrace()
         }
+
+        // 検索用のFragmentを表示するBottomNavigationを非表示にする
+        navView.menu.findItem(R.id.visible_search).isVisible = false
     }
 
     //アクションバーの設定
@@ -70,6 +76,9 @@ class MainActivity : AppCompatActivity() {
         searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
             //検索ボタンを押した
             override fun onQueryTextSubmit(query: String?): Boolean {
+                // 検索ボタンを押したときvisible_searchを選択状態にする
+                val navView: BottomNavigationView = findViewById(R.id.nav_view)
+                navView.selectedItemId = R.id.visible_search
                 return true
             }
             //テキストに変更がかかった

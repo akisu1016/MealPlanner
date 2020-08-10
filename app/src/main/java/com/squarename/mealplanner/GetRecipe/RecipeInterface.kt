@@ -1,4 +1,4 @@
-package com.SquareName.mealplanner.GetRecipe
+package com.squarename.mealplanner.GetRecipe
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

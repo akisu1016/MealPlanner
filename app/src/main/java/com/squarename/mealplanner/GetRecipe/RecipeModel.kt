@@ -1,4 +1,4 @@
-package com.SquareName.mealplanner.GetRecipe
+package com.squarename.mealplanner.GetRecipe
 
 // test用
 data class Item(var id: String,

@@ -1,4 +1,4 @@
-package com.SquareName.mealplanner
+package com.squarename.mealplanner
 
 import android.graphics.Bitmap
 import android.os.Bundle

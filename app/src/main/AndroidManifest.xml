@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.SquareName.mealplanner">
+    package="com.squarename.mealplanner">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -11,9 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".WebViewActivity"></activity>
+        <activity android:name="com.squarename.mealplanner.WebViewActivity"></activity>
         <activity
-            android:name=".MainActivity"
+            android:name="com.squarename.mealplanner.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

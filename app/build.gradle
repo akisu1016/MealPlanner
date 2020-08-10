@@ -7,7 +7,7 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "com.SquareName.mealplanner"
+        applicationId "com.squarename.mealplanner"
         minSdkVersion 23
         targetSdkVersion 29
         versionCode 1

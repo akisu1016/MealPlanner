@@ -1,4 +1,4 @@
-package com.SquareName.mealplanner.tflite;
+package com.squarename.mealplanner.tflite;
 
 import android.app.Activity;
 

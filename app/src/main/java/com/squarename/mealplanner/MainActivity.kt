@@ -1,4 +1,4 @@
-package com.SquareName.mealplanner
+package com.squarename.mealplanner
 
 import android.app.Activity
 import android.content.Intent
@@ -13,9 +13,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.SquareName.mealplanner.tflite.Classifier
-import com.SquareName.mealplanner.tflite.Classifier.create
-import com.SquareName.mealplanner.ui.Library.LibraryFragment
+import com.squarename.mealplanner.tflite.Classifier
+import com.squarename.mealplanner.tflite.Classifier.create
+import com.squarename.mealplanner.ui.Library.LibraryFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.io.FileDescriptor
 import java.io.IOException

@@ -1,4 +1,4 @@
-package com.SquareName.mealplanner.ui.Recyclerview
+package com.squarename.mealplanner.ui.Recyclerview
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,10 +9,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.SquareName.mealplanner.GetRecipe.Item
-import com.SquareName.mealplanner.GetRecipe.createService
-import com.SquareName.mealplanner.R
-import com.SquareName.mealplanner.WebViewActivity
+import com.squarename.mealplanner.GetRecipe.Item
+import com.squarename.mealplanner.GetRecipe.createService
+import com.squarename.mealplanner.R
+import com.squarename.mealplanner.WebViewActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

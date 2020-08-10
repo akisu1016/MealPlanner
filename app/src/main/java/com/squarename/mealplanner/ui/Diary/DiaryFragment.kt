@@ -1,4 +1,4 @@
-package com.SquareName.mealplanner.ui.Diary
+package com.squarename.mealplanner.ui.Diary
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.SquareName.mealplanner.R
+import com.squarename.mealplanner.R
 
 class DiaryFragment : Fragment() {
 

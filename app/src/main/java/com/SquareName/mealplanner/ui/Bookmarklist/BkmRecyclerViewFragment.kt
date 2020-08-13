@@ -62,7 +62,7 @@ class BkmRecyclerViewFragment : Fragment(){
                                 ) {
                                     ItemClick(view, position, clickedText)
                                     deleteAll()
-                                    create("gazou:", "namae", clickedText,"zairyo")
+                                    create("TITLE", clickedText)
                                     Log.d("DB InputCheck",realm.where(Task::class.java).findAll().toString())
                                 }
                             })
@@ -141,15 +141,23 @@ class BkmRecyclerViewFragment : Fragment(){
         this.startActivity(intent)
     }
 
-    fun create(imageId:String = "", recipeName:String = "", recipeUrl:String="", meal:String=""){
-        realm.executeTransaction {
-            var task = realm.createObject(Task::class.java , UUID.randomUUID().toString())
-            task.imageId = imageId
-            task.recipeName = recipeName
-            task.recipeUrl = recipeUrl
-            task.meal = meal
+    fun create(title:String = "", url:String = ""){
+        realm.executeTransaction{
+            var task = realm.createObject(Task::class.java, UUID.randomUUID().toString())
+            task.title = title
+            task.url = url
         }
     }
+
+//    fun create(imageId:String = "", recipeName:String = "", recipeUrl:String="", meal:String=""){
+//        realm.executeTransaction {
+//            var task = realm.createObject(Task::class.java , UUID.randomUUID().toString())
+//            task.imageId = imageId
+//            task.recipeName = recipeName
+//            task.recipeUrl = recipeUrl
+//            task.meal = meal
+//        }
+//    }
 
     fun delete(id: String) {
         realm.executeTransaction {

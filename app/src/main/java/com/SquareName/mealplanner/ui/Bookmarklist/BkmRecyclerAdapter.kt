@@ -4,12 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.SquareName.mealplanner.GetRecipe.Item
 import com.SquareName.mealplanner.R
+import com.SquareName.mealplanner.Realms.Task
 import com.SquareName.mealplanner.ui.Recyclerview.RecyclerViewHolder
+import io.realm.OrderedRealmCollection
 
 class BkmRecyclerAdapter(
-    private val customList: List<Item>,
+    private val customList: OrderedRealmCollection<Task>?,
     private val listener: OnItemClickListener
 ) : RecyclerView.Adapter<RecyclerViewHolder>() {
 
@@ -21,15 +22,16 @@ class BkmRecyclerAdapter(
 
     // recyclerViewのコンテンツのサイズ
     override fun getItemCount(): Int {
-        return customList.size
+        return customList?.size ?: 0//customList.size
     }
 
     // ViewHolderに表示する画像とテキストを挿入
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
+        val task: Task = customList?.get(position) ?: return
         holder.itemImageView.setImageResource(R.mipmap.ic_launcher_round)
-        holder.itemTextView.text = customList[position].title
+        holder.itemTextView.text =task.url
         holder.itemView.setOnClickListener {
-            listener.onItemClick(it, position, customList[position].url)
+            listener.onItemClick(it, position, task.url)
         }
     }
 

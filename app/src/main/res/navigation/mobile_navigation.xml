@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_bookmarklist"
-        android:name="com.SquareName.mealplanner.ui.Bookmarklist.BookmarklistFragment"
+        android:name="com.SquareName.mealplanner.ui.Bookmarklist.BkmRecyclerViewFragment"
         android:label="@string/title_bookmarklist"
         tools:layout="@layout/fragment_bookmarklist" />
 <!--android:label消していいかも？-->

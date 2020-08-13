@@ -15,6 +15,8 @@ import com.SquareName.mealplanner.R
 import com.SquareName.mealplanner.Realms.Task
 import com.SquareName.mealplanner.WebViewActivity
 import io.realm.Realm
+import io.realm.RealmResults
+import io.realm.Sort
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,71 +40,75 @@ class BkmRecyclerViewFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
 
-        val root = inflater.inflate(R.layout.fragment_recyclerview, container, false)
-
-        recipeInterface.items().enqueue(object : Callback<List<Item>> {
-            override fun onFailure(call: Call<List<Item>>?, t: Throwable?) {
-                // Log表示(通信失敗)
-                Log.d("fetchItems", "response fail")
-                Log.d("fetchItems", "throwable :$t")
-            }
-
-            override fun onResponse(call: Call<List<Item>>?, response: Response<List<Item>>) {
-                if (response.isSuccessful) {
-                    response.body()?.let {
-                        // Log表示(成功)
-                        Log.d("fetchItems", "response success")
-                        //ここにRicycleviewの処理
-                        viewAdapter =
-                            BkmRecyclerAdapter(it, object : BkmRecyclerAdapter.OnItemClickListener {
-                                override fun onItemClick(
-                                    view: View,
-                                    position: Int,
-                                    clickedText: String
-                                ) {
-                                    ItemClick(view, position, clickedText)
-                                    deleteAll()
-                                    create("TITLE", clickedText)
-                                    Log.d("DB InputCheck",realm.where(Task::class.java).findAll().toString())
-                                }
-                            })
-                        viewManager = LinearLayoutManager(context)
-
-                        with(root) {
-                            recyclerView = findViewById<RecyclerView>(R.id.my_recycler_view).apply {
-                                // 1.adapterにセット
-                                adapter = viewAdapter
-                                // 2.LayoutMangerをセット
-                                layoutManager = viewManager
-                            }
-                        }
-                    }
-                }
-                // Log表示(ResponseBodyがない)
-                Log.d("fetchItems", "response code:" + response.code())
-                Log.d("fetchItems", "response errorBody:" + response.errorBody())
-            }
-        })
-
-
 //        val root = inflater.inflate(R.layout.fragment_recyclerview, container, false)
-//        val value = resources.getStringArray(R.array.URL)
 //
-//        viewAdapter = RecyclerAdapter(value, object : RecyclerAdapter.OnItemClickListener{
-//            override fun onItemClick(view: View, position: Int, clickedText: String) {
-//                ItemClick(view, position, clickedText)
+//        recipeInterface.items().enqueue(object : Callback<List<Item>> {
+//            override fun onFailure(call: Call<List<Item>>?, t: Throwable?) {
+//                // Log表示(通信失敗)
+//                Log.d("fetchItems", "response fail")
+//                Log.d("fetchItems", "throwable :$t")
+//            }
+//
+//            override fun onResponse(call: Call<List<Item>>?, response: Response<List<Item>>) {
+//                if (response.isSuccessful) {
+//                    response.body()?.let {
+//                        // Log表示(成功)
+//                        Log.d("fetchItems", "response success")
+//                        //ここにRicycleviewの処理
+//                        viewAdapter =
+//                            BkmRecyclerAdapter(it, object : BkmRecyclerAdapter.OnItemClickListener {
+//                                override fun onItemClick(
+//                                    view: View,
+//                                    position: Int,
+//                                    clickedText: String
+//                                ) {
+//                                    ItemClick(view, position, clickedText)
+//                                    deleteAll()
+//                                    create("TITLE", clickedText)
+//                                    Log.d("DB InputCheck",realm.where(Task::class.java).findAll().toString())
+//                                }
+//                            })
+//                        viewManager = LinearLayoutManager(context)
+//
+//                        with(root) {
+//                            recyclerView = findViewById<RecyclerView>(R.id.my_recycler_view).apply {
+//                                // 1.adapterにセット
+//                                adapter = viewAdapter
+//                                // 2.LayoutMangerをセット
+//                                layoutManager = viewManager
+//                            }
+//                        }
+//                    }
+//                }
+//                // Log表示(ResponseBodyがない)
+//                Log.d("fetchItems", "response code:" + response.code())
+//                Log.d("fetchItems", "response errorBody:" + response.errorBody())
 //            }
 //        })
-//        viewManager = LinearLayoutManager(context)
-//
-//        with(root) {
-//            recyclerView = findViewById<RecyclerView>(R.id.my_recycler_view).apply {
-//                // 1.adapterにセット
-//                adapter = viewAdapter
-//                // 2.LayoutMangerをセット
-//                layoutManager = viewManager
-//            }
-//        }
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        val root = inflater.inflate(R.layout.fragment_recyclerview, container, false)
+        val value = resources.getStringArray(R.array.URL)
+        val realmList = readAll()
+
+        viewAdapter = BkmRecyclerAdapter(hoge, object : BkmRecyclerAdapter.OnItemClickListener{
+            override fun onItemClick(view: View, position: Int, clickedText: String) {
+                ItemClick(view, position, clickedText)
+                deleteAll()
+                create("TITLE", clickedText)
+                Log.d("DB InputCheck",realm.where(Task::class.java).findAll().toString())
+            }
+        })
+        viewManager = LinearLayoutManager(context)
+
+        with(root) {
+            recyclerView = findViewById<RecyclerView>(R.id.my_recycler_view).apply {
+                // 1.adapterにセット
+                adapter = viewAdapter
+                // 2.LayoutMangerをセット
+                layoutManager = viewManager
+            }
+        }
 
         return root
     }
@@ -147,6 +153,10 @@ class BkmRecyclerViewFragment : Fragment(){
             task.title = title
             task.url = url
         }
+    }
+
+    fun readAll(): RealmResults<Task> {
+        return realm.where(Task::class.java).findAll().sort("createdAt", Sort.ASCENDING)
     }
 
 //    fun create(imageId:String = "", recipeName:String = "", recipeUrl:String="", meal:String=""){

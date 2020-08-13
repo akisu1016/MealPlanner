@@ -14,7 +14,6 @@ import com.SquareName.mealplanner.GetRecipe.createService
 import com.SquareName.mealplanner.R
 import com.SquareName.mealplanner.Realms.Task
 import com.SquareName.mealplanner.WebViewActivity
-import com.SquareName.mealplanner.ui.Recyclerview.RecyclerAdapter
 import io.realm.Realm
 import retrofit2.Call
 import retrofit2.Callback
@@ -55,7 +54,7 @@ class BkmRecyclerViewFragment : Fragment(){
                         Log.d("fetchItems", "response success")
                         //ここにRicycleviewの処理
                         viewAdapter =
-                            RecyclerAdapter(it, object : RecyclerAdapter.OnItemClickListener {
+                            BkmRecyclerAdapter(it, object : BkmRecyclerAdapter.OnItemClickListener {
                                 override fun onItemClick(
                                     view: View,
                                     position: Int,

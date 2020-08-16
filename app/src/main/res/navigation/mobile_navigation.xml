@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_diary"
-        android:name="com.squarename.mealplanner.ui.Recyclerview.RecycleviewFragment"
+        android:name="com.squarename.mealplanner.ui.Diary.DiaryFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_recyclerview" />
 
     <fragment
         android:id="@+id/navigation_library"
-        android:name="com.squarename.mealplanner.ui.Library.LibraryFragment"
+        android:name="com.squarename.mealplanner.ui.library.LibraryFragment"
         android:label="@string/title_library"
         tools:layout="@layout/fragment_library" />
 
     <fragment
         android:id="@+id/navigation_bookmarklist"
-        android:name="com.squarename.mealplanner.ui.Bookmarklist.BookmarklistFragment"
+        android:name="com.squarename.mealplanner.ui.bookmarklist.BookmarklistFragment"
         android:label="@string/title_bookmarklist"
         tools:layout="@layout/fragment_bookmarklist" />
 <!--android:label消していいかも？-->

@@ -1,4 +1,4 @@
-package com.squarename.mealplanner.ui.Recyclerview
+package com.squarename.mealplanner.ui.recyclerview
 
 import android.view.View
 import android.widget.ImageView

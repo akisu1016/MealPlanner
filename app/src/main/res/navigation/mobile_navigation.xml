@@ -19,9 +19,9 @@
 
     <fragment
         android:id="@+id/navigation_bookmarklist"
-        android:name="com.SquareName.mealplanner.ui.Bookmarklist.BkmRecyclerViewFragment"
+        android:name="com.SquareName.mealplanner.ui.Bookmarklist.BookmarklistFragment"
         android:label="@string/title_bookmarklist"
-        tools:layout="@layout/fragment_recyclerview" />
+        tools:layout="@layout/fragment_bookmarklist" />
 <!--android:label消していいかも？-->
 <!--    <fragment-->
 <!--        android:id="@+id/navigation_diary"-->

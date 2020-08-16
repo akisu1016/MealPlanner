@@ -1,4 +1,4 @@
-package com.SquareName.mealplanner
+package com.squarename.mealplanner
 
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -8,7 +8,6 @@ import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class WebViewActivity : AppCompatActivity() {
@@ -20,24 +19,25 @@ class WebViewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_web_view)
 
         myWebView = findViewById(R.id.webview)
-        myWebView.settings.javaScriptEnabled = true
-        myWebView.webViewClient = WebViewClient()
-        myWebView.loadUrl(intent.getStringExtra("url"))
+        myWebView.run {
+            settings.javaScriptEnabled = true
+            webViewClient = WebViewClient()
+            loadUrl(intent.getStringExtra("url"))
+        }
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 //        supportActionBar?.setHomeButtonEnabled(true)
 
 
-
-        myWebView.setWebViewClient(object : WebViewClient() {
+        myWebView.webViewClient = object : WebViewClient() {
 
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                supportActionBar?.setTitle("読み込み中")
+                supportActionBar?.title = getString(R.string.loading)
             }
 
             override fun onPageFinished(view: WebView, url: String) {
                 Log.d("URL", url)
-                supportActionBar?.setTitle(view.title)
+                supportActionBar?.title = view.title
             }
 
             override fun onReceivedError(
@@ -47,12 +47,12 @@ class WebViewActivity : AppCompatActivity() {
             ) {
                 finish()
             }
-        })
+        }
     }
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id: Int = item.getItemId()
+        val id: Int = item.itemId
         if (id == android.R.id.home) {
             finish() //Activityを閉じる
         }
@@ -61,7 +61,9 @@ class WebViewActivity : AppCompatActivity() {
 
     //戻るボタン
     override fun onBackPressed() {
-        if (myWebView != null && myWebView.canGoBack()) myWebView.goBack()
-        else super.onBackPressed()
+        myWebView?.let {
+            if (it.canGoBack()) it.goBack()
+            else super.onBackPressed()
+        } ?: super.onBackPressed()
     }
 }

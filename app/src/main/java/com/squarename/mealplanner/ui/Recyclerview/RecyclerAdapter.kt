@@ -1,17 +1,17 @@
-package com.SquareName.mealplanner.ui.Recyclerview
-
-import android.content.Context
+package com.squarename.mealplanner.ui.Recyclerview
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.SquareName.mealplanner.GetRecipe.Item
-import com.SquareName.mealplanner.R
-import kotlinx.android.synthetic.main.list_item.view.*
+import com.squarename.mealplanner.GetRecipe.Item
+import com.squarename.mealplanner.R
 
 
-class RecyclerAdapter(private val customList: List<Item>, private val listener: OnItemClickListener) : RecyclerView.Adapter<RecyclerViewHolder>(){
+class RecyclerAdapter(
+    private val customList: List<Item>,
+    private val listener: OnItemClickListener
+) : RecyclerView.Adapter<RecyclerViewHolder>() {
 
     // getItemCount onCreateViewHolder onBindViewHolderを実装
     // 上記のViewHolderクラスを使ってViewHolderを作成

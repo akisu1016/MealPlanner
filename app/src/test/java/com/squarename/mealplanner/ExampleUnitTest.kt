@@ -1,4 +1,4 @@
-package com.SquareName.mealplanner
+package com.squarename.mealplanner
 
 import org.junit.Test
 

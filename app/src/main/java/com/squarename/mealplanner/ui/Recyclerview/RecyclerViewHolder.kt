@@ -1,10 +1,10 @@
-package com.SquareName.mealplanner.ui.Recyclerview
+package com.squarename.mealplanner.ui.Recyclerview
 
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.SquareName.mealplanner.R
+import com.squarename.mealplanner.R
 
 
 class RecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {

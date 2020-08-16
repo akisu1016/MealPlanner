@@ -1,4 +1,4 @@
-package com.SquareName.mealplanner.ui.Diary
+package com.squarename.mealplanner.ui.Diary
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

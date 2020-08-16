@@ -1,4 +1,4 @@
-package com.squarename.mealplanner.ui.Library
+package com.squarename.mealplanner.ui.library
 
 import android.content.Intent
 import android.os.Bundle

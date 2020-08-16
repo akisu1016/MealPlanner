@@ -1,4 +1,4 @@
-package com.squarename.mealplanner.ui.Bookmarklist
+package com.squarename.mealplanner.ui.bookmarklist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

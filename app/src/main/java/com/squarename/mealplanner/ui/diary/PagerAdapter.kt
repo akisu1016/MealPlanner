@@ -10,7 +10,9 @@ class PagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
         return Int.MAX_VALUE
     }
 
-    override fun createFragment(position: Int): Fragment = CalendarFragment(position)
+    override fun createFragment(position: Int): Fragment{
+        return CalendarFragment(position)
+    }
 
 }
 

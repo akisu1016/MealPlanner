@@ -33,11 +33,6 @@ class CalendarFragment(position: Int) : Fragment() {
     val default = Int.MAX_VALUE / 2
     val weekdays: Array<String> = arrayOf("日", "月", "火", "水", "木", "金", "土")
     var calendar = Calendar.getInstance()
-    var year = null
-    var month = null
-    var day = null
-    var week = null
-
 
 
     override fun onCreateView(
@@ -56,10 +51,39 @@ class CalendarFragment(position: Int) : Fragment() {
         var week = calendar[Calendar.DAY_OF_WEEK] - 1
         binding.daylabel.text = "${year}年${month}月${day}日 ${weekdays[week]}曜日"
 
-        items = listOf(
-            Item("1", "title", "hogehoge"),
-            Item("2", "title", "hugahuga")
-        )
+        Log.d("hoge", (position - default).toString())
+
+        when(position - default){
+            0 -> {
+                items = listOf(
+                    Item("0", "title", "hogehoge"),
+                    Item("1", "title", "hugahuga")
+                )
+            }
+
+            1 -> {
+                items = listOf(
+                    Item("1", "1です", "hogehoge"),
+                    Item("2", "２です", "hugahuga")
+                )
+            }
+
+            2 -> {
+                items = listOf(
+                    Item("2", "２です", "hogehoge"),
+                    Item("3", "３だべ", "hugahuga")
+                )
+            }
+
+            3 -> {
+                items = listOf(
+                    Item("3", "３じゃ", "hogehoge"),
+                    Item("4", "４よ", "hugahuga")
+                )
+            }
+        }
+
+
 
 
         if(items != null){

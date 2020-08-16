@@ -15,7 +15,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.squarename.mealplanner.tflite.Classifier
 import com.squarename.mealplanner.tflite.Classifier.create
-import com.squarename.mealplanner.ui.Library.LibraryFragment
+import com.squarename.mealplanner.ui.library.LibraryFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.squarename.mealplanner.ui.Bookmarklist.BookmarklistFragment
 import com.squarename.mealplanner.ui.Diary.DiaryFragment

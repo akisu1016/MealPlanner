@@ -1,4 +1,4 @@
-package com.squarename.mealplanner.ui.Bookmarklist
+package com.squarename.mealplanner.ui.bookmarklist
 
 import android.os.Bundle
 import android.view.LayoutInflater

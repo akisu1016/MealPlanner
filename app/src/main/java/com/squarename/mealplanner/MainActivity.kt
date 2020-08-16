@@ -17,9 +17,9 @@ import com.squarename.mealplanner.tflite.Classifier
 import com.squarename.mealplanner.tflite.Classifier.create
 import com.squarename.mealplanner.ui.library.LibraryFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.squarename.mealplanner.ui.Bookmarklist.BookmarklistFragment
+import com.squarename.mealplanner.ui.bookmarklist.BookmarklistFragment
 import com.squarename.mealplanner.ui.Diary.DiaryFragment
-import com.squarename.mealplanner.ui.Recyclerview.RecycleviewFragment
+import com.squarename.mealplanner.ui.recyclerview.RecycleviewFragment
 import java.io.FileDescriptor
 import java.io.IOException
 

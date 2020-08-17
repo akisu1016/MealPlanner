@@ -10,12 +10,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.squarename.mealplanner.GetRecipe.Item
 import com.squarename.mealplanner.R
 import com.squarename.mealplanner.WebViewActivity
 import com.squarename.mealplanner.databinding.FragmenrtCalendarRecyclerviewBinding
-import com.squarename.mealplanner.ui.Recyclerview.RecyclerAdapter
+import com.squarename.mealplanner.getrecipe.Item
+import com.squarename.mealplanner.ui.recyclerview.RecyclerAdapter
 import kotlinx.android.synthetic.main.list_item.view.*
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -51,7 +53,16 @@ class CalendarFragment(position: Int) : Fragment() {
         var week = calendar[Calendar.DAY_OF_WEEK] - 1
         binding.daylabel.text = "${year}年${month}月${day}日 ${weekdays[week]}曜日"
 
-        Log.d("hoge", (position - default).toString())
+        try {
+            val strDate = "${year}/${month}/${day}"
+            val sdf = SimpleDateFormat("yyyy/MM/dd")
+            val date: Date = sdf.parse(strDate)
+            Log.d("strDate", strDate)
+            Log.d("sdf", sdf.toString())
+            Log.d("date", date.toString())
+        } catch (e: ParseException) {
+            Log.d("e", e.toString())
+        }
 
         when(position - default){
             0 -> {

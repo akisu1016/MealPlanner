@@ -9,10 +9,10 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.squarename.mealplanner.GetRecipe.Item
+import com.squarename.mealplanner.getrecipe.Item
 import com.squarename.mealplanner.R
 import com.squarename.mealplanner.WebViewActivity
-import com.squarename.mealplanner.ui.Recyclerview.RecyclerAdapter
+import com.squarename.mealplanner.ui.recyclerview.RecyclerAdapter
 import kotlinx.android.synthetic.main.list_item.view.*
 import java.lang.Exception
 import java.util.*

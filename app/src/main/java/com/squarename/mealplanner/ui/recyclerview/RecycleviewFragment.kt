@@ -13,6 +13,7 @@ import com.squarename.mealplanner.getrecipe.Item
 import com.squarename.mealplanner.getrecipe.createService
 import com.squarename.mealplanner.R
 import com.squarename.mealplanner.WebViewActivity
+import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,6 +33,15 @@ class RecycleviewFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // 検索した食材
+        val args = arguments
+        var material = ""
+        if(args != null) {
+            material = args?.getString("MATERIAL").toString()
+            Log.d("get argment", "response :$material")
+        } else {
+            Log.d("get argment", "response :false")
+        }
 
         val root = inflater.inflate(R.layout.fragment_recyclerview, container, false)
 
@@ -77,61 +87,26 @@ class RecycleviewFragment : Fragment() {
             }
         })
 
-
-//        val root = inflater.inflate(R.layout.fragment_recyclerview, container, false)
-//        val value = resources.getStringArray(R.array.URL)
-//
-//        viewAdapter = RecyclerAdapter(value, object : RecyclerAdapter.OnItemClickListener{
-//            override fun onItemClick(view: View, position: Int, clickedText: String) {
-//                ItemClick(view, position, clickedText)
-//            }
-//        })
-//        viewManager = LinearLayoutManager(context)
-//
-//        with(root) {
-//            recyclerView = findViewById<RecyclerView>(R.id.my_recycler_view).apply {
-//                // 1.adapterにセット
-//                adapter = viewAdapter
-//                // 2.LayoutMangerをセット
-//                layoutManager = viewManager
-//            }
-//        }
-
         return root
     }
 
-//    private fun fetchRecipes() {
-//        recipeInterface.items().enqueue(object : Callback<List<Item>> {
-//            override fun onFailure(call: Call<List<Item>>?, t: Throwable?) {
-//                // Log表示(通信失敗)
-//                Log.d("fetchItems", "response fail")
-//                Log.d("fetchItems", "throwable :$t")
-//            }
-//
-//            override fun onResponse(call: Call<List<Item>>?, response: Response<List<Item>>) {
-//                if (response.isSuccessful) {
-//                    response.body()?.let {
-//                        // Log表示(成功)
-//                        Log.d("fetchItems", "response success")
-//
-//                        //ここに処理
-//
-//                    }
-//                }
-//                // Log表示(ResponseBodyがない)
-//                Log.d("fetchItems", "response code:" + response.code())
-//                Log.d("fetchItems", "response errorBody:" + response.errorBody())
-//            }
-//        })
-//    }
-
     //リストをクリックしたときの処理
     fun ItemClick(view: View, position: Int, clickedText: String) {
-//        val url = view.itemTextView.text
         val url = clickedText
         val intent = Intent(activity, WebViewActivity::class.java)
         intent.putExtra("url", url)
         this.startActivity(intent)
+    }
+
+    // 検索Fragment生成時にActivityから受け取る値（検索ワード）をArgumentに設定する
+    companion object {
+        fun newInstance(articleId: String?): RecycleviewFragment {
+            val args = Bundle()
+            args.putString("MATERIAL", articleId)
+            val fragment = RecycleviewFragment()
+            fragment.arguments = args
+            return fragment
+        }
     }
 
 }

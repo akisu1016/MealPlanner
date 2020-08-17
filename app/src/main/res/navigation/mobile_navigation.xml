@@ -22,6 +22,7 @@
         android:name="com.squarename.mealplanner.ui.bookmarklist.BookmarklistFragment"
         android:label="@string/title_bookmarklist"
         tools:layout="@layout/fragment_bookmarklist" />
+
 <!--android:label消していいかも？-->
 <!--    <fragment-->
 <!--        android:id="@+id/navigation_diary"-->

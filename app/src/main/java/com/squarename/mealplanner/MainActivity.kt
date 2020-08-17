@@ -17,6 +17,9 @@ import com.squarename.mealplanner.tflite.Classifier
 import com.squarename.mealplanner.tflite.Classifier.create
 import com.squarename.mealplanner.ui.library.LibraryFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.squarename.mealplanner.ui.bookmarklist.BookmarklistFragment
+import com.squarename.mealplanner.ui.Diary.DiaryFragment
+import com.squarename.mealplanner.ui.recyclerview.RecycleviewFragment
 import java.io.FileDescriptor
 import java.io.IOException
 
@@ -29,23 +32,45 @@ class MainActivity : AppCompatActivity() {
     val RESULT_IMAGEFILE = 1001
     val RESULT_CAMERAFILE = 1002
 
+    // BottomNavigationViewのリスナー
+    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        when (item.itemId) {
+            R.id.navigation_diary -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.nav_host_fragment, RecycleviewFragment())
+                    .commit()
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_library -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.nav_host_fragment, LibraryFragment())
+                    .commit()
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_bookmarklist -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.nav_host_fragment, BookmarklistFragment())
+                    .commit()
+                return@OnNavigationItemSelectedListener true
+            }
+        }
+        false
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
-        val navController = findNavController(R.id.nav_host_fragment)
+//        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+//        val navController = findNavController(R.id.nav_host_fragment)
+//        navView.setupWithNavController(navController)
 
-        // 各メニューIDを一連のIDとして渡すと、
-        // メニューは最上位の目的地と見なされます。
-        /*//タイトルバー表示
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_diary, R.id.navigation_library, R.id.navigation_bookmarklist
-            )
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration) */
-        navView.setupWithNavController(navController)
+        // BottomNavigationViewにリスナーを付ける
+        val navigation: BottomNavigationView = findViewById(R.id.nav_view)
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        // はじめに表示するFragment
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.nav_host_fragment, RecycleviewFragment())
+            .commit()
 
         try {
             library = LibraryFragment()
@@ -72,6 +97,11 @@ class MainActivity : AppCompatActivity() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             //検索ボタンを押した
             override fun onQueryTextSubmit(query: String?): Boolean {
+                // 検索Fragmentを呼び出す
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.nav_host_fragment, RecycleviewFragment.newInstance(query))
+                    .commit()
                 return true
             }
 
@@ -119,6 +149,12 @@ class MainActivity : AppCompatActivity() {
                     classifier.recognizeImage(resizeImage(bmp), 1)
                 text += results[0].title
                 this.textView.text = text
+
+                // 画像解析の結果で検索Fragmentを呼び出す
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.nav_host_fragment, RecycleviewFragment.newInstance(text))
+                    .commit()
             }
         }
         this.textView.requestFocus()

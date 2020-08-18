@@ -7,8 +7,7 @@ import io.realm.Realm
 import java.util.*
 
 class RealmMethod {
-
-    private lateinit var groupeAdapter: RecyclerView.Adapter<*>
+    
     open val realm: Realm by lazy {
         Realm.getDefaultInstance()
     }

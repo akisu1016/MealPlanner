@@ -65,8 +65,7 @@ class RecycleviewFragment : Fragment() {
                                     clickedText: String
                                 ) {
                                     ItemClick(view, position, clickedText)
-//                                    realmMethod.hoge()
-                                    //deleteAll()
+                                    deleteAll()
                                     create("TITLE", clickedText, true)
                                     read(true)
                                     //tmSearch("TITLE")

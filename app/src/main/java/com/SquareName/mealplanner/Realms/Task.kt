@@ -8,11 +8,10 @@ import java.util.*
 
 open class testTask: RealmObject() {
     @PrimaryKey open var id: String = UUID.randomUUID().toString()
+    open var BkmorDia: Boolean = true
     open var title: String = ""
     open var url: String = ""
-    open var tag: Boolean = true
-    open var timeStamp: Date = Date(System.currentTimeMillis())
-    open var TSformat: String = dateFormat()
+    open var timeStamp: String = dateFormat()
 }//ここでDBの要素を定義する
 
 open class Task: RealmObject(){
@@ -21,8 +20,7 @@ open class Task: RealmObject(){
     open var recipeName: String = ""
     open var recipeUrl: String = ""
     open var meal: String = ""
-    open var timeStamp: Date = Date(System.currentTimeMillis())
-    open var TSformat: String = dateFormat()
+    open var timeStamp: String = dateFormat()
 }
 
 private  fun dateFormat(): String{
@@ -30,11 +28,3 @@ private  fun dateFormat(): String{
     var tmStampFormat: Date = Date(System.currentTimeMillis())
     return df.format(tmStampFormat)
 }
-
-data class taskData(
-    var title: String,
-    var url: String,
-    var tag: Boolean,
-    var timeStamp: Date = Date(System.currentTimeMillis()),
-    var TSformat: String = dateFormat()
-)

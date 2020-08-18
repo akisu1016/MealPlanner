@@ -12,15 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.SquareName.mealplanner.GetRecipe.Item
 import com.SquareName.mealplanner.GetRecipe.createService
 import com.SquareName.mealplanner.R
-import com.SquareName.mealplanner.Realms.taskData
-import com.SquareName.mealplanner.Realms.testTask
 import com.SquareName.mealplanner.WebViewActivity
-import io.realm.Realm
-import io.realm.RealmList
+import com.SquareName.mealplanner.Realms.RealmMethod
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
 
 
 class RecycleviewFragment : Fragment() {
@@ -31,10 +27,6 @@ class RecycleviewFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
-
-    private val realm: Realm by lazy {
-        Realm.getDefaultInstance()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,11 +57,11 @@ class RecycleviewFragment : Fragment() {
                                     clickedText: String
                                 ) {
                                     ItemClick(view, position, clickedText)
-                                    deleteAll()
-                                    create("TITLE", clickedText, true)
-                                    read(true)
-                                    //tmSearch("TITLE")
-                                    //Log.d("DB InputCheck",realm.where(testTask::class.java).findAll().toString())
+                                    val rMethod = RealmMethod()
+                                    rMethod.deleteAll()
+                                    rMethod.create(true, "TITLE", clickedText)
+                                    rMethod.readAll(true)
+                                    Log.d("listCheck", rMethod.getTime("2020/08/18"))
                                 }
                             })
                         viewManager = LinearLayoutManager(context)
@@ -146,51 +138,4 @@ class RecycleviewFragment : Fragment() {
         intent.putExtra("url", url)
         this.startActivity(intent)
     }
-
-    fun create(title:String = "", url:String = "", BkmorDia:Boolean){
-        realm.executeTransaction{
-            var task = realm.createObject(testTask::class.java, UUID.randomUUID().toString())
-            task.title = title
-            task.url = url
-            task.tag = BkmorDia
-        }
-    }
-
-    fun read(BkmorDia: Boolean){
-        var task = realm.where(testTask::class.java).equalTo("tag",BkmorDia).findAll()
-        Log.d("InputCheck", task.toString())
-//realmResult->arraylist
-//        val stepEntryResults: RealmResults<testTask> = task//realm.where(testTask::class.java).findAll()
-//        val stepEntryArray: ArrayList<testTask> = ArrayList<testTask>(stepEntryResults)
-    }
-
-    fun tmSearch(tmStamp:String){
-        var task = realm.where(testTask::class.java).equalTo("title",tmStamp).findAll()
-        Log.d("InputCheck", task.toString())
-    }
-
-//    fun create(imageId:String = "", recipeName:String = "", recipeUrl:String="", meal:String=""){
-//        realm.executeTransaction {
-//            var task = realm.createObject(Task::class.java , UUID.randomUUID().toString())
-//            task.imageId = imageId
-//            task.recipeName = recipeName
-//            task.recipeUrl = recipeUrl
-//            task.meal = meal
-//        }
-//    }
-
-    fun delete(id: String) {
-        realm.executeTransaction {
-            val task = realm.where(testTask::class.java).equalTo("id", id).findFirst()
-                ?: return@executeTransaction
-            task.deleteFromRealm()
-        }
-    }
-
-    fun deleteAll() {
-        realm.executeTransaction {
-            realm.deleteAll()
-        }
-    }
-
 }

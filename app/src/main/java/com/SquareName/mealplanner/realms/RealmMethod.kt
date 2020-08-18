@@ -1,8 +1,6 @@
-package com.SquareName.mealplanner.Realms
+package com.SquareName.mealplanner.realms
 
 import android.util.Log
-import androidx.recyclerview.widget.RecyclerView
-import com.SquareName.mealplanner.ui.Recyclerview.RecyclerAdapter
 import io.realm.Realm
 import java.util.*
 

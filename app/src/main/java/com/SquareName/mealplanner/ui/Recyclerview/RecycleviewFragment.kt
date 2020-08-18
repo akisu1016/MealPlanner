@@ -13,7 +13,7 @@ import com.SquareName.mealplanner.GetRecipe.Item
 import com.SquareName.mealplanner.GetRecipe.createService
 import com.SquareName.mealplanner.R
 import com.SquareName.mealplanner.WebViewActivity
-import com.SquareName.mealplanner.Realms.RealmMethod
+import com.SquareName.mealplanner.realms.RealmMethod
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

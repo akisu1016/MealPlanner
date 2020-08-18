@@ -1,4 +1,4 @@
-package com.SquareName.mealplanner.realms
+package com.SquareName.mealplanner.rmethods
 
 import android.util.Log
 import io.realm.Realm

@@ -1,4 +1,4 @@
-package com.SquareName.mealplanner.realms
+package com.SquareName.mealplanner.rmethods
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey

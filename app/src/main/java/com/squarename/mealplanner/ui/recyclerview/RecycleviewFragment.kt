@@ -14,6 +14,7 @@ import com.squarename.mealplanner.getrecipe.createService
 import com.squarename.mealplanner.R
 import com.squarename.mealplanner.WebViewActivity
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
+import com.squarename.mealplanner.rmethods.RealmMethod
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -57,7 +58,6 @@ class RecycleviewFragment : Fragment() {
                     response.body()?.let {
                         // Log表示(成功)
                         Log.d("fetchItems", "response success")
-
                         //ここにRicycleviewの処理
                         viewAdapter =
                             RecyclerAdapter(it, object : RecyclerAdapter.OnItemClickListener {
@@ -67,6 +67,13 @@ class RecycleviewFragment : Fragment() {
                                     clickedText: String
                                 ) {
                                     ItemClick(view, position, clickedText)
+                                    //以下realmテストコード
+                                    val rMethod = RealmMethod()
+                                    rMethod.deleteAll()
+                                    rMethod.create(true, "TITLE", clickedText)
+                                    rMethod.readAll(true)
+                                    //↓一致するレコードがないとエラー出すので注意（このコードなら端末の日付にあわせること）
+                                    Log.d("listCheck", rMethod.getTime("2020/08/19"))
                                 }
                             })
                         viewManager = LinearLayoutManager(context)
@@ -108,5 +115,4 @@ class RecycleviewFragment : Fragment() {
             return fragment
         }
     }
-
 }

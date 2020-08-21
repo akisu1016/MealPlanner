@@ -67,13 +67,6 @@ class RecycleviewFragment : Fragment() {
                                     clickedText: String
                                 ) {
                                     ItemClick(view, position, clickedText)
-                                    //以下realmテストコード
-                                    val rMethod = RealmMethod()
-                                    rMethod.deleteAll()
-                                    rMethod.create(true, "TITLE", clickedText)
-                                    rMethod.readAll(true)
-                                    //↓一致するレコードがないとエラー出すので注意（このコードなら端末の日付にあわせること）
-                                    Log.d("listCheck", rMethod.getTime("2020/08/19"))
                                 }
                             })
                         viewManager = LinearLayoutManager(context)

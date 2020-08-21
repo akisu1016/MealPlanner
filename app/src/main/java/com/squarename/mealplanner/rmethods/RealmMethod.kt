@@ -3,6 +3,7 @@ package com.squarename.mealplanner.rmethods
 import android.util.Log
 import io.realm.Realm
 import java.util.*
+import com.squarename.mealplanner.getrecipe.Item
 
 class RealmMethod {
     
@@ -32,6 +33,15 @@ class RealmMethod {
             .equalTo("BkmorDia", BkmorDia)
             .equalTo("title", title)
             .equalTo("url", url)
+    }
+    fun readFromTime(timeStamp: String): List<Item>{//時間から記録用のデータをList<Item>型で返す
+        var task = realm.where(testTask::class.java).equalTo("timeStamp",timeStamp).findAll()
+        val listTask: List<testTask> = task
+        var items = mutableListOf<Item>()
+        for(i in listTask.indices){
+            items.add(i, Item(listTask[i].id, listTask[i].title, listTask[i].url))
+        }
+        return items
     }
     //タイムスタンプをyyyy/MM/ddで返す
     fun getTime(timeStamp:String): String{

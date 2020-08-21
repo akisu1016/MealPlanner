@@ -14,6 +14,7 @@ import com.squarename.mealplanner.R
 import com.squarename.mealplanner.WebViewActivity
 import com.squarename.mealplanner.databinding.FragmenrtCalendarRecyclerviewBinding
 import com.squarename.mealplanner.getrecipe.Item
+import com.squarename.mealplanner.rmethods.RealmMethod
 import com.squarename.mealplanner.ui.recyclerview.RecyclerAdapter
 import kotlinx.android.synthetic.main.list_item.view.*
 import java.text.ParseException
@@ -26,6 +27,8 @@ class CalendarFragment(position: Int) : Fragment() {
     private lateinit var binding: FragmenrtCalendarRecyclerviewBinding
     val position = position
     var items = listOf<Item>()
+    val realm = RealmMethod()
+
     //RecycleView格納変数
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
@@ -57,12 +60,15 @@ class CalendarFragment(position: Int) : Fragment() {
             val strDate = "${year}/${month}/${day}"
             val sdf = SimpleDateFormat("yyyy/MM/dd")
             val date: Date = sdf.parse(strDate)
+            Log.d("realm", realm.getTime(strDate))
             Log.d("strDate", strDate)
             Log.d("sdf", sdf.toString())
             Log.d("date", date.toString())
         } catch (e: ParseException) {
             Log.d("e", e.toString())
         }
+
+
 
         when(position - default){
             0 -> {

@@ -19,13 +19,7 @@ class BookmarklistFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        bookmarklistViewModel =
-            ViewModelProviders.of(this).get(BookmarklistViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_bookmarklist, container, false)
-        val textView: TextView = root.findViewById(R.id.text_bookmarklist)
-        bookmarklistViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
         return root
     }
 }

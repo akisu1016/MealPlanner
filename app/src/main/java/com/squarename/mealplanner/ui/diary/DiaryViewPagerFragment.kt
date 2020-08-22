@@ -14,12 +14,8 @@ import com.google.android.material.tabs.TabLayout
 
 class DiaryViewPagerFragment : Fragment() {
 
-    val weekdays: Array<String> = arrayOf("日", "月", "火", "水", "木", "金", "土")
-
     private lateinit var fragmentstateadapter: FragmentStateAdapter
-    private lateinit var viewPager: ViewPager2
     private lateinit var binding: FragmentDiaryViewpagerBinding
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,20 +24,10 @@ class DiaryViewPagerFragment : Fragment() {
     ): View {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_diary_viewpager, container, false)
-//        val root = inflater.inflate(R.layout.fragment_diary_viewpager, container, false)
-
-//        viewPager = root.findViewById(R.id.pager)
         fragmentstateadapter = PagerAdapter(this)
-//        viewPager.adapter = fragmentstateadapter
         binding.pager.adapter = fragmentstateadapter
-//        viewPager.setCurrentItem(Int.MAX_VALUE / 2, true)
         binding.pager.setCurrentItem(Int.MAX_VALUE / 2, true)
 
-
-//        val tabLayout = tab.findViewById<TabLayout>(R.id.tab_layout)
-//        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-//            tab.text = "${weekdays[position]}"
-//        }.attach()
 
         return binding.root
     }

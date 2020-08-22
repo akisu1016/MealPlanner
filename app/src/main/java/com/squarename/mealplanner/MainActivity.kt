@@ -11,14 +11,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
 import com.squarename.mealplanner.tflite.Classifier
 import com.squarename.mealplanner.tflite.Classifier.create
 import com.squarename.mealplanner.ui.library.LibraryFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.squarename.mealplanner.ui.bookmarklist.BookmarklistFragment
-import com.squarename.mealplanner.ui.diary.DiaryFragment
 import com.squarename.mealplanner.ui.diary.DiaryViewPagerFragment
 import com.squarename.mealplanner.ui.recyclerview.RecycleviewFragment
 import java.io.FileDescriptor

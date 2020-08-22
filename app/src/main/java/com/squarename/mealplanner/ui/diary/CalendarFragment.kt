@@ -45,10 +45,7 @@ class CalendarFragment(position: Int) : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-//        val root = inflater.inflate(R.layout.fragmenrt_calendar_recyclerview, container, false)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragmenrt_calendar_recyclerview, container, false)
-//        val diaryData = DiaryData()
-//        binding.calendardata = diaryData
         calendar.add(Calendar.DATE, position - default)
         var year = calendar[Calendar.YEAR]
         var month = calendar[Calendar.MONTH] + 1
@@ -56,57 +53,22 @@ class CalendarFragment(position: Int) : Fragment() {
         var week = calendar[Calendar.DAY_OF_WEEK] - 1
         binding.daylabel.text = "${year}年${month}月${day}日 ${weekdays[week]}曜日"
 
+
+        //日付をフォーマットしてRealmから検索
         try {
-            val strDate = "${year}/${month}/${day}"
             val sdf = SimpleDateFormat("yyyy/MM/dd")
-            val date: Date = sdf.parse(strDate)
-            Log.d("realm", realm.getTime(strDate))
-            Log.d("strDate", strDate)
-            Log.d("sdf", sdf.toString())
-            Log.d("date", date.toString())
+            val date: String = sdf.format(calendar.time)
+            items = realm.readFromTime(date)
         } catch (e: ParseException) {
             Log.d("e", e.toString())
         }
 
 
-
-        when(position - default){
-            0 -> {
-                items = listOf(
-                    Item("0", "title", "hogehoge"),
-                    Item("1", "title", "hugahuga")
-                )
-            }
-
-            1 -> {
-                items = listOf(
-                    Item("1", "1です", "hogehoge"),
-                    Item("2", "２です", "hugahuga")
-                )
-            }
-
-            2 -> {
-                items = listOf(
-                    Item("2", "２です", "hogehoge"),
-                    Item("3", "３だべ", "hugahuga")
-                )
-            }
-
-            3 -> {
-                items = listOf(
-                    Item("3", "３じゃ", "hogehoge"),
-                    Item("4", "４よ", "hugahuga")
-                )
-            }
-        }
-
-
-
-
-        if(items != null){
-            viewAdapter = RecyclerAdapter(items!!, object : RecyclerAdapter.OnItemClickListener{
+        //リストが存在した場合表示
+        if(items.equals("")){
+            viewAdapter = RecyclerAdapter(items, object : RecyclerAdapter.OnItemClickListener{
                 override fun onItemClick(view: View, position: Int, clickedText: String) {
-                    ItemClick(view, position)
+                    ItemClick(view)
                 }
             })
             viewManager = LinearLayoutManager(context)
@@ -119,13 +81,15 @@ class CalendarFragment(position: Int) : Fragment() {
                     layoutManager = viewManager
                 }
             }
+        }else{
+            binding.ExistText.text = "この日にレシピは登録されていません"
         }
 
         return binding.root
     }
 
     //リストをクリックしたときの処理
-    fun ItemClick(view: View, position: Int) {
+    fun ItemClick(view: View) {
         val url = view.itemTextView.text
         val intent = Intent(activity, WebViewActivity::class.java)
         intent.putExtra("url", url)

@@ -17,8 +17,8 @@ import com.squarename.mealplanner.tflite.Classifier
 import com.squarename.mealplanner.tflite.Classifier.create
 import com.squarename.mealplanner.ui.library.LibraryFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.squarename.mealplanner.ui.bookmarklist.BookmarklistFragment
 import com.squarename.mealplanner.ui.Diary.DiaryFragment
+import com.squarename.mealplanner.ui.bookmarklist.BkmListFragment
 import com.squarename.mealplanner.ui.recyclerview.RecycleviewFragment
 import java.io.FileDescriptor
 import java.io.IOException
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.navigation_bookmarklist -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.nav_host_fragment, BookmarklistFragment())
+                    .replace(R.id.nav_host_fragment, BkmListFragment())
                     .commit()
                 return@OnNavigationItemSelectedListener true
             }

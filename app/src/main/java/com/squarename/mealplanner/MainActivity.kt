@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.navigation_library -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.nav_host_fragment, LibraryFragment())
+                    .replace(R.id.nav_host_fragment, RecycleviewFragment())
                     .commit()
                 return@OnNavigationItemSelectedListener true
             }

@@ -10,19 +10,14 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.squarename.mealplanner.getrecipe.Item
-import com.squarename.mealplanner.getrecipe.createService
 import com.squarename.mealplanner.R
 import com.squarename.mealplanner.WebViewActivity
-import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import com.squarename.mealplanner.rmethods.RealmMethod
 import com.squarename.mealplanner.ui.recyclerview.RecyclerAdapter
-import com.squarename.mealplanner.ui.recyclerview.RecycleviewFragment
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class BkmListFragment: Fragment() {
-    private val recipeInterface by lazy { createService() }
+    var items = listOf<Item>()
+    val realm = RealmMethod()
 
     //RecycleView格納変数
     private lateinit var recyclerView: RecyclerView
@@ -44,55 +39,29 @@ class BkmListFragment: Fragment() {
             Log.d("get argment", "response :false")
         }
 
+        items = realm.readBkm()
+
         val root = inflater.inflate(R.layout.fragment_recyclerview, container, false)
 
-        recipeInterface.items().enqueue(object : Callback<List<Item>> {
-            override fun onFailure(call: Call<List<Item>>?, t: Throwable?) {
-                // Log表示(通信失敗)
-                Log.d("fetchItems", "response fail")
-                Log.d("fetchItems", "throwable :$t")
-            }
-
-            override fun onResponse(call: Call<List<Item>>?, response: Response<List<Item>>) {
-                if (response.isSuccessful) {
-                    response.body()?.let {
-                        // Log表示(成功)
-                        Log.d("fetchItems", "response success")
-                        //ここにRicycleviewの処理
-                        viewAdapter =
-                            RecyclerAdapter(it, object : RecyclerAdapter.OnItemClickListener {
-                                override fun onItemClick(
-                                    view: View,
-                                    position: Int,
-                                    clickedText: String
-                                ) {
-                                    ItemClick(view, position, clickedText)
-                                    val rMethod = RealmMethod()
-                                    //rMethod.deleteAll()
-                                    rMethod.create(false, "TITLE", clickedText)
-                                    //↓一致するレコードがないとエラー出すので注意（このコードなら端末の日付にあわせること）
-                                    for(i in rMethod.readFromTime("2020/08/27").indices){
-                                        Log.d("listCheck", rMethod.readFromTime("2020/08/27")[i].toString())
-                                    }
-                                }
-                            })
-                        viewManager = LinearLayoutManager(context)
-
-                        with(root) {
-                            recyclerView = findViewById<RecyclerView>(R.id.my_recycler_view).apply {
-                                // 1.adapterにセット
-                                adapter = viewAdapter
-                                // 2.LayoutMangerをセット
-                                layoutManager = viewManager
-                            }
-                        }
-                    }
-                }
-                // Log表示(ResponseBodyがない)
-                Log.d("fetchItems", "response code:" + response.code())
-                Log.d("fetchItems", "response errorBody:" + response.errorBody())
+        viewAdapter = RecyclerAdapter(items, object : RecyclerAdapter.OnItemClickListener{
+            override fun onItemClick(
+                view: View,
+                position: Int,
+                clickedText: String
+            ) {
+                ItemClick(view, position, clickedText)
             }
         })
+        viewManager = LinearLayoutManager(context)
+
+        with(root) {
+            recyclerView = findViewById<RecyclerView>(R.id.my_recycler_view).apply {
+                // 1.adapterにセット
+                adapter = viewAdapter
+                // 2.LayoutMangerをセット
+                layoutManager = viewManager
+            }
+        }
 
         return root
     }
@@ -103,16 +72,5 @@ class BkmListFragment: Fragment() {
         val intent = Intent(activity, WebViewActivity::class.java)
         intent.putExtra("url", url)
         this.startActivity(intent)
-    }
-
-    // 検索Fragment生成時にActivityから受け取る値（検索ワード）をArgumentに設定する
-    companion object {
-        fun newInstance(articleId: String?): RecycleviewFragment {
-            val args = Bundle()
-            args.putString("MATERIAL", articleId)
-            val fragment = RecycleviewFragment()
-            fragment.arguments = args
-            return fragment
-        }
     }
 }

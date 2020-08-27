@@ -4,11 +4,14 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
+import com.squarename.mealplanner.rmethods.RealmMethod
+import kotlinx.android.synthetic.main.activity_web_view.*
 
 class WebViewActivity : AppCompatActivity() {
 
@@ -24,6 +27,10 @@ class WebViewActivity : AppCompatActivity() {
             webViewClient = WebViewClient()
             loadUrl(intent.getStringExtra("url"))
         }
+
+        bookmark_button.setOnClickListener(View.OnClickListener{
+            RealmMethod().create(true, webview.title, intent.getStringExtra(("url")))
+        })
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 //        supportActionBar?.setHomeButtonEnabled(true)

@@ -11,14 +11,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
 import com.squarename.mealplanner.tflite.Classifier
 import com.squarename.mealplanner.tflite.Classifier.create
 import com.squarename.mealplanner.ui.library.LibraryFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.squarename.mealplanner.ui.Diary.DiaryFragment
 import com.squarename.mealplanner.ui.bookmarklist.BkmListFragment
+import com.squarename.mealplanner.ui.diary.DiaryViewPagerFragment
 import com.squarename.mealplanner.ui.recyclerview.RecycleviewFragment
 import java.io.FileDescriptor
 import java.io.IOException
@@ -37,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.navigation_diary -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.nav_host_fragment, RecycleviewFragment())
+                    .replace(R.id.nav_host_fragment, DiaryViewPagerFragment())
                     .commit()
                 return@OnNavigationItemSelectedListener true
             }
@@ -69,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         // はじめに表示するFragment
         supportFragmentManager.beginTransaction()
-            .replace(R.id.nav_host_fragment, RecycleviewFragment())
+            .replace(R.id.nav_host_fragment, DiaryViewPagerFragment())
             .commit()
 
         try {

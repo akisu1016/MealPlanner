@@ -64,7 +64,7 @@ class CalendarFragment(position: Int) : Fragment() {
         }
 
         //リストが存在した場合表示
-        if(!items.isEmpty()){
+        if(items.isNotEmpty()){
             viewAdapter = RecyclerAdapter(items, object : RecyclerAdapter.OnItemClickListener{
                 override fun onItemClick(view: View, position: Int, clickedText: String) {
                     ItemClick(view)

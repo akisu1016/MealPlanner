@@ -46,6 +46,18 @@ class RealmMethod {
         }
         return items
     }
+
+    fun readBkm(): List<Item>{
+        var task = realm.where(testTask::class.java)
+            .equalTo("BkmorDia",true)
+            .findAll()
+        val listTask: List<testTask> = task
+        val items = mutableListOf<Item>()
+        for(i in listTask.indices){
+            items.add(i, Item(listTask[i].id, listTask[i].title, listTask[i].url))
+        }
+        return  items
+    }
     //タイムスタンプをyyyy/MM/ddで返す
     fun getTime(timeStamp:String): String{
         var task = realm.where(testTask::class.java)

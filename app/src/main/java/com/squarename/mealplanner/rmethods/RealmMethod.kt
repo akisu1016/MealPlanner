@@ -27,6 +27,7 @@ class RealmMethod {
         val listTask: List<testTask> = task
         Log.d("InputCheck", listTask.toString())
     }
+
     //完全一致するレコードを探す（好きにいじって）
     fun readSerch(BkmorDia: Boolean, title: String, url: String){
         var task = realm.where(testTask::class.java)
@@ -34,6 +35,7 @@ class RealmMethod {
             .equalTo("title", title)
             .equalTo("url", url)
     }
+
     fun readFromTime(timeStamp: String): List<Item>{//時間から記録用のデータをList<Item>型で返す
         var task = realm.where(testTask::class.java)
             .equalTo("BkmorDia",false)
@@ -58,6 +60,7 @@ class RealmMethod {
         }
         return  items
     }
+
     //タイムスタンプをyyyy/MM/ddで返す
     fun getTime(timeStamp:String): String{
         var task = realm.where(testTask::class.java)
@@ -67,17 +70,6 @@ class RealmMethod {
         Log.d("listcheck", "Date:" + listTask[0].timeStamp)
         return listTask[0].timeStamp
     }
-
-
-//    fun create(imageId:String = "", recipeName:String = "", recipeUrl:String="", meal:String=""){
-//        realm.executeTransaction {
-//            var task = realm.createObject(Task::class.java , UUID.randomUUID().toString())
-//            task.imageId = imageId
-//            task.recipeName = recipeName
-//            task.recipeUrl = recipeUrl
-//            task.meal = meal
-//        }
-//    }
 
     fun delete(id: String) {
         realm.executeTransaction {

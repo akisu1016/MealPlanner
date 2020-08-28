@@ -29,15 +29,6 @@ class BkmListFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // 検索した食材
-        val args = arguments
-        var material = ""
-        if(args != null) {
-            material = args?.getString("MATERIAL").toString()
-            Log.d("get argment", "response :$material")
-        } else {
-            Log.d("get argment", "response :false")
-        }
 
         items = realm.readBkm()
 

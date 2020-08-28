@@ -53,19 +53,18 @@ class CalendarFragment(position: Int) : Fragment() {
         var week = calendar[Calendar.DAY_OF_WEEK] - 1
         binding.daylabel.text = "${year}年${month}月${day}日 ${weekdays[week]}曜日"
 
-
         //日付をフォーマットしてRealmから検索
         try {
             val sdf = SimpleDateFormat("yyyy/MM/dd")
             val date: String = sdf.format(calendar.time)
             items = realm.readFromTime(date)
+            Log.d("item", items.toString())
         } catch (e: ParseException) {
             Log.d("e", e.toString())
         }
 
-
         //リストが存在した場合表示
-        if(items.equals("")){
+        if(!items.isEmpty()){
             viewAdapter = RecyclerAdapter(items, object : RecyclerAdapter.OnItemClickListener{
                 override fun onItemClick(view: View, position: Int, clickedText: String) {
                     ItemClick(view)

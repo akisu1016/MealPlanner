@@ -28,7 +28,6 @@ class DiaryViewPagerFragment : Fragment() {
         binding.pager.adapter = fragmentstateadapter
         binding.pager.setCurrentItem(Int.MAX_VALUE / 2, true)
 
-
         return binding.root
     }
     

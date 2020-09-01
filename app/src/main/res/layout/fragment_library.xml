@@ -30,18 +30,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/_i_icon_00019_icon_000190_128" />
 
+
     <TextView
         android:id="@+id/result_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginBottom="100dp"
         android:layout_weight="1"
+        android:text="画像から食材を判定します"
         android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
-
 
     <ImageView
         android:id="@+id/imageView"

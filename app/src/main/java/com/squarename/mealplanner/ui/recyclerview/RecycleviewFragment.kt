@@ -15,6 +15,7 @@ import com.squarename.mealplanner.R
 import com.squarename.mealplanner.WebViewActivity
 import com.squarename.mealplanner.getrecipe.Recipe
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
+import com.squarename.mealplanner.rmethods.RealmMethod
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -109,5 +110,4 @@ class RecycleviewFragment : Fragment() {
             return fragment
         }
     }
-
 }

@@ -13,6 +13,7 @@ import com.squarename.mealplanner.getrecipe.Item
 import com.squarename.mealplanner.getrecipe.createService
 import com.squarename.mealplanner.R
 import com.squarename.mealplanner.WebViewActivity
+import com.squarename.mealplanner.getrecipe.Recipe
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import com.squarename.mealplanner.rmethods.RealmMethod
 import retrofit2.Call
@@ -46,18 +47,19 @@ class RecycleviewFragment : Fragment() {
 
         val root = inflater.inflate(R.layout.fragment_recyclerview, container, false)
 
-        recipeInterface.items().enqueue(object : Callback<List<Item>> {
-            override fun onFailure(call: Call<List<Item>>?, t: Throwable?) {
+        recipeInterface.recipes(material).enqueue(object : Callback<List<Recipe>> {
+            override fun onFailure(call: Call<List<Recipe>>?, t: Throwable?) {
                 // Log表示(通信失敗)
-                Log.d("fetchItems", "response fail")
-                Log.d("fetchItems", "throwable :$t")
+                Log.d("fetchRecipe", "response fail")
+                Log.d("fetchRecipe", "throwable :$t")
             }
 
-            override fun onResponse(call: Call<List<Item>>?, response: Response<List<Item>>) {
+            override fun onResponse(call: Call<List<Recipe>>?, response: Response<List<Recipe>>) {
                 if (response.isSuccessful) {
                     response.body()?.let {
                         // Log表示(成功)
-                        Log.d("fetchItems", "response success")
+                        Log.d("fetchRecipe", "response success")
+
                         //ここにRicycleviewの処理
                         viewAdapter =
                             RecyclerAdapter(it, object : RecyclerAdapter.OnItemClickListener {
@@ -82,8 +84,8 @@ class RecycleviewFragment : Fragment() {
                     }
                 }
                 // Log表示(ResponseBodyがない)
-                Log.d("fetchItems", "response code:" + response.code())
-                Log.d("fetchItems", "response errorBody:" + response.errorBody())
+                Log.d("fetchRecipe", "response code:" + response.code())
+                Log.d("fetchRecipe", "response errorBody:" + response.errorBody())
             }
         })
 

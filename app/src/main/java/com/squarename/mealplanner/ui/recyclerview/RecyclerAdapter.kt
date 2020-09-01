@@ -4,12 +4,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import com.squarename.mealplanner.getrecipe.Item
 import com.squarename.mealplanner.R
+import com.squarename.mealplanner.getrecipe.Recipe
 
 
 class RecyclerAdapter(
-    private val customList: List<Item>,
+    private val customList: List<Recipe>,
     private val listener: OnItemClickListener
 ) : RecyclerView.Adapter<RecyclerViewHolder>() {
 
@@ -28,8 +30,12 @@ class RecyclerAdapter(
 
     // ViewHolderに表示する画像とテキストを挿入
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
-        holder.itemImageView.setImageResource(R.mipmap.ic_launcher_round)
+        // リンク画像を表示する
+        val url = customList[position].imgUrl
+        holder.itemImageView.load(url)
+        // テキスト
         holder.itemTextView.text = customList[position].title
+        // Clickイベント
         holder.itemView.setOnClickListener {
             listener.onItemClick(it, position, customList[position].url)
         }

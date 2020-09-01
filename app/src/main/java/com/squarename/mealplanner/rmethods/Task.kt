@@ -16,10 +16,11 @@ open class testTask: RealmObject() {
 
 open class Task: RealmObject(){
     @PrimaryKey open var id: String = UUID.randomUUID().toString()
-    open var imageId: String = ""
-    open var recipeName: String = ""
-    open var recipeUrl: String = ""
-    open var meal: String = ""
+    open var BkmorDia: Boolean =true
+    open var title: String=""
+    open var url: String=""
+    open var material: String=""
+    open var imgUrl: String=""
     open var timeStamp: String = dateFormat()
 }
 

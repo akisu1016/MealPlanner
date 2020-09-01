@@ -30,7 +30,7 @@ class DiaryViewPagerFragment : Fragment() {
 
         return binding.root
     }
-    
+
 
 }
 

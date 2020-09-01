@@ -14,6 +14,7 @@ import com.squarename.mealplanner.R
 import com.squarename.mealplanner.WebViewActivity
 import com.squarename.mealplanner.databinding.FragmenrtCalendarRecyclerviewBinding
 import com.squarename.mealplanner.getrecipe.Item
+import com.squarename.mealplanner.getrecipe.Recipe
 import com.squarename.mealplanner.rmethods.RealmMethod
 import com.squarename.mealplanner.ui.recyclerview.RecyclerAdapter
 import kotlinx.android.synthetic.main.list_item.view.*
@@ -26,7 +27,7 @@ class CalendarFragment(position: Int) : Fragment() {
 
     private lateinit var binding: FragmenrtCalendarRecyclerviewBinding
     val position = position
-    var items = listOf<Item>()
+    var items = listOf<Recipe>()
     val realm = RealmMethod()
 
     //RecycleView格納変数
@@ -57,7 +58,7 @@ class CalendarFragment(position: Int) : Fragment() {
         try {
             val sdf = SimpleDateFormat("yyyy/MM/dd")
             val date: String = sdf.format(calendar.time)
-            items = realm.readFromTime(date)
+            items = realm.rft(date)
             Log.d("item", items.toString())
         } catch (e: ParseException) {
             Log.d("e", e.toString())

@@ -4,6 +4,7 @@ import android.util.Log
 import io.realm.Realm
 import java.util.*
 import com.squarename.mealplanner.getrecipe.Item
+import com.squarename.mealplanner.getrecipe.Recipe
 
 class RealmMethod {
     
@@ -48,6 +49,19 @@ class RealmMethod {
         }
         return items
     }
+    //動作テスト用コード
+    fun rft(timeStamp: String): List<Recipe>{
+        var task = realm.where(Task::class.java)
+            .equalTo("BkmorDia",false)
+            .equalTo("timeStamp",timeStamp)
+            .findAll()
+        val listTask: List<Task> = task
+        var items = mutableListOf<Recipe>()
+        for(i in listTask.indices){
+            items.add(i, Recipe(listTask[i].id, listTask[i].title, listTask[i].url,listTask[i].material,listTask[i].imgUrl))
+        }
+        return items
+    }
 
     fun readBkm(): List<Item>{
         var task = realm.where(testTask::class.java)
@@ -57,6 +71,18 @@ class RealmMethod {
         val items = mutableListOf<Item>()
         for(i in listTask.indices){
             items.add(i, Item(listTask[i].id, listTask[i].title, listTask[i].url))
+        }
+        return  items
+    }
+
+    fun rb(): List<Recipe>{
+        var task = realm.where(Task::class.java)
+            .equalTo("BkmorDia",true)
+            .findAll()
+        val listTask: List<Task> = task
+        val items = mutableListOf<Recipe>()
+        for(i in listTask.indices){
+            items.add(i, Recipe(listTask[i].id, listTask[i].title, listTask[i].url,listTask[i].material,listTask[i].imgUrl))
         }
         return  items
     }

@@ -12,11 +12,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squarename.mealplanner.getrecipe.Item
 import com.squarename.mealplanner.R
 import com.squarename.mealplanner.WebViewActivity
+import com.squarename.mealplanner.getrecipe.Recipe
 import com.squarename.mealplanner.rmethods.RealmMethod
 import com.squarename.mealplanner.ui.recyclerview.RecyclerAdapter
 
 class BkmListFragment: Fragment() {
-    var items = listOf<Item>()
+    var items = listOf<Recipe>()
     val realm = RealmMethod()
 
     //RecycleView格納変数
@@ -30,7 +31,7 @@ class BkmListFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        items = realm.readBkm()
+        items = realm.rb()
 
         val root = inflater.inflate(R.layout.fragment_recyclerview, container, false)
 

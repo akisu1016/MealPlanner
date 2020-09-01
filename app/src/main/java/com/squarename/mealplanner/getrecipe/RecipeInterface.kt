@@ -19,8 +19,8 @@ interface RecipeInterface {
 
 fun createService(): RecipeInterface {
     // test用
-    val baseApiUrl = "https://qiita.com/api/"
-//    val baseApiUrl = "http://10.0.2.2:8080/"
+//    val baseApiUrl = "https://qiita.com/api/"
+    val baseApiUrl = "http://59.106.222.80/"
 
     val httpLogging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     val httpClientBuilder = OkHttpClient.Builder().addInterceptor(httpLogging)

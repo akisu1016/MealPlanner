@@ -58,7 +58,7 @@ class CalendarFragment(position: Int) : Fragment() {
         try {
             val sdf = SimpleDateFormat("yyyy/MM/dd")
             val date: String = sdf.format(calendar.time)
-            items = realm.rft(date)
+            items = realm.readFromTime(date)
             Log.d("item", items.toString())
         } catch (e: ParseException) {
             Log.d("e", e.toString())
@@ -68,7 +68,9 @@ class CalendarFragment(position: Int) : Fragment() {
         if(items.isNotEmpty()){
             viewAdapter = RecyclerAdapter(items, object : RecyclerAdapter.OnItemClickListener{
                 override fun onItemClick(view: View, position: Int, clickedText: String) {
-                    ItemClick(view)
+                    val imgUrl = items[position].imgUrl
+                    ItemClick(view, position, clickedText, imgUrl)// webviewでのimgUrlの取得方法がわからん過ぎるので無理やり取っておく
+//                    ItemClick(view)
                 }
             })
             viewManager = LinearLayoutManager(context)
@@ -89,10 +91,18 @@ class CalendarFragment(position: Int) : Fragment() {
     }
 
     //リストをクリックしたときの処理
-    fun ItemClick(view: View) {
-        val url = view.itemTextView.text
+//    fun ItemClick(view: View) {
+//        val url = view.itemTextView.text
+//        val intent = Intent(activity, WebViewActivity::class.java)
+//        intent.putExtra("url", url)
+//        this.startActivity(intent)
+//    }
+    //上のurl(view.itemTextView.text)が取得先間違えてて使えんので旧式に戻します
+    fun ItemClick(view: View, position: Int, clickedText: String, imgUrl: String) {
+        val url = clickedText
         val intent = Intent(activity, WebViewActivity::class.java)
         intent.putExtra("url", url)
+        intent.putExtra("imgUrl", imgUrl)
         this.startActivity(intent)
     }
 }

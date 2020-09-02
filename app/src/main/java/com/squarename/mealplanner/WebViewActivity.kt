@@ -10,6 +10,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
+import com.squarename.mealplanner.getrecipe.Recipe
 import com.squarename.mealplanner.rmethods.RealmMethod
 import kotlinx.android.synthetic.main.activity_web_view.*
 
@@ -28,11 +29,19 @@ class WebViewActivity : AppCompatActivity() {
             loadUrl(intent.getStringExtra("url"))
         }
 
+        val realm = RealmMethod()
+
         bookmark_button.setOnClickListener(View.OnClickListener{
-            RealmMethod().create(true, webview.title, intent.getStringExtra(("url")))
+//            RealmMethod().create(true, webview.title, intent.getStringExtra(("url")))
+            val url = intent.getStringExtra("url")
+            val imgUrl = intent.getStringExtra("imgUrl")
+            realm.create(true,webview.title, url,imgUrl)
         })
         record_button.setOnClickListener(View.OnClickListener{
-            RealmMethod().create(false, webview.title, intent.getStringExtra(("url")))
+            //RealmMethod().create(false, webview.title, intent.getStringExtra(("url")))
+            val url = intent.getStringExtra("url")
+            val imgUrl = intent.getStringExtra("imgUrl")
+            realm.create(false,webview.title, url,imgUrl)
         })
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

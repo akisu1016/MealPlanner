@@ -12,12 +12,13 @@ class RealmMethod {
         Realm.getDefaultInstance()
     }
 
-    fun create(BkmorDia: Boolean, title:String = "", url:String = ""){
+    fun create(BkmorDia: Boolean, title: String = "", url: String ="", imgUrl: String =""){
         realm.executeTransaction{
-            var task = realm.createObject(testTask::class.java, UUID.randomUUID().toString())
+            var task = realm.createObject(Task::class.java, UUID.randomUUID().toString())
             task.BkmorDia = BkmorDia
             task.title = title
             task.url = url
+            task.imgUrl = imgUrl
         }
     }
 
@@ -37,20 +38,8 @@ class RealmMethod {
             .equalTo("url", url)
     }
 
-    fun readFromTime(timeStamp: String): List<Item>{//時間から記録用のデータをList<Item>型で返す
-        var task = realm.where(testTask::class.java)
-            .equalTo("BkmorDia",false)
-            .equalTo("timeStamp",timeStamp)
-            .findAll()
-        val listTask: List<testTask> = task
-        var items = mutableListOf<Item>()
-        for(i in listTask.indices){
-            items.add(i, Item(listTask[i].id, listTask[i].title, listTask[i].url))
-        }
-        return items
-    }
     //動作テスト用コード
-    fun rft(timeStamp: String): List<Recipe>{
+    fun readFromTime(timeStamp: String): List<Recipe>{
         var task = realm.where(Task::class.java)
             .equalTo("BkmorDia",false)
             .equalTo("timeStamp",timeStamp)
@@ -63,19 +52,7 @@ class RealmMethod {
         return items
     }
 
-    fun readBkm(): List<Item>{
-        var task = realm.where(testTask::class.java)
-            .equalTo("BkmorDia",true)
-            .findAll()
-        val listTask: List<testTask> = task
-        val items = mutableListOf<Item>()
-        for(i in listTask.indices){
-            items.add(i, Item(listTask[i].id, listTask[i].title, listTask[i].url))
-        }
-        return  items
-    }
-
-    fun rb(): List<Recipe>{
+    fun readBkm(): List<Recipe>{
         var task = realm.where(Task::class.java)
             .equalTo("BkmorDia",true)
             .findAll()
@@ -85,16 +62,6 @@ class RealmMethod {
             items.add(i, Recipe(listTask[i].id, listTask[i].title, listTask[i].url,listTask[i].material,listTask[i].imgUrl))
         }
         return  items
-    }
-
-    //タイムスタンプをyyyy/MM/ddで返す
-    fun getTime(timeStamp:String): String{
-        var task = realm.where(testTask::class.java)
-            .equalTo("timeStamp",timeStamp)
-            .findAll()
-        val listTask: List<testTask> = task
-        Log.d("listcheck", "Date:" + listTask[0].timeStamp)
-        return listTask[0].timeStamp
     }
 
     fun delete(id: String) {

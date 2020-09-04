@@ -1,6 +1,7 @@
 package com.squarename.mealplanner.ui.bookmarklist
 
 import android.content.Intent
+import android.net.UrlQuerySanitizer
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -31,7 +32,7 @@ class BkmListFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        items = realm.rb()
+        items = realm.readBkm()
 
         val root = inflater.inflate(R.layout.fragment_recyclerview, container, false)
 
@@ -41,7 +42,8 @@ class BkmListFragment: Fragment() {
                 position: Int,
                 clickedText: String
             ) {
-                ItemClick(view, position, clickedText)
+                val imgUrl = items[position].imgUrl
+                ItemClick(view, position, clickedText, imgUrl)// webviewでのimgUrlの取得方法がわからん過ぎるので無理やり取っておく
             }
         })
         viewManager = LinearLayoutManager(context)
@@ -59,10 +61,11 @@ class BkmListFragment: Fragment() {
     }
 
     //リストをクリックしたときの処理
-    fun ItemClick(view: View, position: Int, clickedText: String) {
+    fun ItemClick(view: View, position: Int, clickedText: String, imgUrl: String) {
         val url = clickedText
         val intent = Intent(activity, WebViewActivity::class.java)
         intent.putExtra("url", url)
+        intent.putExtra("imgUrl", imgUrl)
         this.startActivity(intent)
     }
 }

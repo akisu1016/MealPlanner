@@ -68,7 +68,8 @@ class RecycleviewFragment : Fragment() {
                                     position: Int,
                                     clickedText: String
                                 ) {
-                                    ItemClick(view, position, clickedText)
+                                    val imgUrl = it[position].imgUrl
+                                    ItemClick(view, position, clickedText, imgUrl)// webviewでのimgUrlの取得方法がわからん過ぎるので無理やり取っておく
                                 }
                             })
                         viewManager = LinearLayoutManager(context)
@@ -93,10 +94,11 @@ class RecycleviewFragment : Fragment() {
     }
 
     //リストをクリックしたときの処理
-    fun ItemClick(view: View, position: Int, clickedText: String) {
+    fun ItemClick(view: View, position: Int, clickedText: String , imgUrl: String) {
         val url = clickedText
         val intent = Intent(activity, WebViewActivity::class.java)
         intent.putExtra("url", url)
+        intent.putExtra("imgUrl", imgUrl)
         this.startActivity(intent)
     }
 

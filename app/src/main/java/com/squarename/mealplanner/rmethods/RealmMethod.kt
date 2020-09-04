@@ -38,6 +38,19 @@ class RealmMethod {
             .equalTo("url", url)
     }
 
+    fun rExist(BkmorDia: Boolean, title: String): Boolean{
+        val task = realm.where(Task::class.java)
+            .equalTo("BkmorDia",BkmorDia)
+            .equalTo("title",title)
+            .findAll()
+        val list: List<Task> = task
+        val items = mutableListOf<Recipe>()
+        for(i in list.indices){
+            items.add(i, Recipe(list[i].id, list[i].title, list[i].url,list[i].material,list[i].imgUrl))
+        }
+        return items.isEmpty()
+    }
+
     //動作テスト用コード
     fun readFromTime(timeStamp: String): List<Recipe>{
         var task = realm.where(Task::class.java)
@@ -64,13 +77,23 @@ class RealmMethod {
         return  items
     }
 
-    fun delete(id: String) {
+//    fun delete(id: String) {
+//        realm.executeTransaction {
+//            val task = realm.where(testTask::class.java)
+//                .equalTo("id", id)
+//                .findFirst()
+//                ?: return@executeTransaction
+//            task.deleteFromRealm()
+//        }
+//    }
+    fun delete(BkmorDia: Boolean, title: String){
+        var task = realm.where(Task::class.java)
+            .equalTo("BkmorDia", BkmorDia)
+            .equalTo("title",title)
+            .findAll()
+        //削除
         realm.executeTransaction {
-            val task = realm.where(testTask::class.java)
-                .equalTo("id", id)
-                .findFirst()
-                ?: return@executeTransaction
-            task.deleteFromRealm()
+            task.deleteAllFromRealm()
         }
     }
 

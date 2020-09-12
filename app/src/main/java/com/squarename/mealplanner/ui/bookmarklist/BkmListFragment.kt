@@ -1,21 +1,21 @@
 package com.squarename.mealplanner.ui.bookmarklist
 
+import android.app.Activity
 import android.content.Intent
-import android.net.UrlQuerySanitizer
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.squarename.mealplanner.getrecipe.Item
 import com.squarename.mealplanner.R
 import com.squarename.mealplanner.WebViewActivity
 import com.squarename.mealplanner.getrecipe.Recipe
 import com.squarename.mealplanner.rmethods.RealmMethod
 import com.squarename.mealplanner.ui.recyclerview.RecyclerAdapter
+import android.app.AlertDialog
+import io.realm.Realm
 
 class BkmListFragment: Fragment() {
     var items = listOf<Recipe>()
@@ -37,13 +37,15 @@ class BkmListFragment: Fragment() {
         val root = inflater.inflate(R.layout.fragment_recyclerview, container, false)
 
         viewAdapter = RecyclerAdapter(items, object : RecyclerAdapter.OnItemClickListener{
-            override fun onItemClick(
-                view: View,
-                position: Int,
-                clickedText: String
-            ) {
+            override fun onItemClick(view: View, position: Int, clickedText: String) {
                 val imgUrl = items[position].imgUrl
                 ItemClick(view, position, clickedText, imgUrl)// webviewでのimgUrlの取得方法がわからん過ぎるので無理やり取っておく
+            }
+
+            override fun onItemLongClick(view: View, position: Int, clickedText: String) {
+                val title = items[position].title
+                val imgUrl = items[position].imgUrl
+             ItemLongClick(clickedText,this@BkmListFragment)
             }
         })
         viewManager = LinearLayoutManager(context)
@@ -67,5 +69,8 @@ class BkmListFragment: Fragment() {
         intent.putExtra("url", url)
         intent.putExtra("imgUrl", imgUrl)
         this.startActivity(intent)
+    }
+    fun ItemLongClick(clickedText: String, act: Fragment){
+        RealmMethod().bkmDelDialog(clickedText,act)
     }
 }

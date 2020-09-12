@@ -37,11 +37,11 @@ class WebViewActivity : AppCompatActivity() {
             val title = webview.title
             val url = intent.getStringExtra("url")
             val imgUrl = intent.getStringExtra("imgUrl")
-            if(realm.rExist(true, title)){
-                realm.create(true,webview.title, url,imgUrl)
+            if(realm.rExist(true, url)){
+                realm.create(true, title, url, imgUrl)
                 showToast("ブックマークしました")
             }else{
-                realm.delete(true, title)
+                realm.delete(true, url)
                 showToast("ブックマークを削除しました")
             }
         })
@@ -49,7 +49,7 @@ class WebViewActivity : AppCompatActivity() {
             val title = webview.title
             val url = intent.getStringExtra("url")
             val imgUrl = intent.getStringExtra("imgUrl")
-            realm.create(false, title, url,imgUrl)
+            realm.create(false, title, url, imgUrl)
             showToast("記録しました")
         })
 

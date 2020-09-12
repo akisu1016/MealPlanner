@@ -63,13 +63,14 @@ class RecycleviewFragment : Fragment() {
                         //ここにRicycleviewの処理
                         viewAdapter =
                             RecyclerAdapter(it, object : RecyclerAdapter.OnItemClickListener {
-                                override fun onItemClick(
-                                    view: View,
-                                    position: Int,
-                                    clickedText: String
-                                ) {
+                                override fun onItemClick(view: View, position: Int, clickedText: String) {
                                     val imgUrl = it[position].imgUrl
                                     ItemClick(view, position, clickedText, imgUrl)// webviewでのimgUrlの取得方法がわからん過ぎるので無理やり取っておく
+                                }
+                                override fun onItemLongClick(view: View, position: Int, clickedText: String) {
+                                    val title = it[position].title
+                                    val imgUrl = it[position].imgUrl
+                                    ItemLongClick(title,clickedText, imgUrl, this@RecycleviewFragment)
                                 }
                             })
                         viewManager = LinearLayoutManager(context)
@@ -100,6 +101,15 @@ class RecycleviewFragment : Fragment() {
         intent.putExtra("url", url)
         intent.putExtra("imgUrl", imgUrl)
         this.startActivity(intent)
+    }
+
+    fun ItemLongClick(title: String, url: String, imgUrl: String, act: Fragment){
+        val realm = RealmMethod()
+        if(realm.rExist(true, url)){
+            realm.bkmCreDialog(title, url, imgUrl, act)
+        }else{
+            realm.bkmExistDialog(act)
+        }
     }
 
     // 検索Fragment生成時にActivityから受け取る値（検索ワード）をArgumentに設定する

@@ -1,6 +1,7 @@
 package com.squarename.mealplanner.ui.diary
 
 import android.content.Intent
+import android.icu.text.CaseMap
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,6 +18,7 @@ import com.squarename.mealplanner.getrecipe.Item
 import com.squarename.mealplanner.getrecipe.Recipe
 import com.squarename.mealplanner.rmethods.RealmMethod
 import com.squarename.mealplanner.ui.recyclerview.RecyclerAdapter
+import kotlinx.android.synthetic.main.fragment_library.*
 import kotlinx.android.synthetic.main.list_item.view.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -70,7 +72,11 @@ class CalendarFragment(position: Int) : Fragment() {
                 override fun onItemClick(view: View, position: Int, clickedText: String) {
                     val imgUrl = items[position].imgUrl
                     ItemClick(view, position, clickedText, imgUrl)// webviewでのimgUrlの取得方法がわからん過ぎるので無理やり取っておく
-//                    ItemClick(view)
+                }
+                override fun onItemLongClick(view: View, position: Int, clickedText: String) {
+                    val title = items[position].title
+                    val imgUrl = items[position].imgUrl
+                    ItemLongClick(title,clickedText, imgUrl, this@CalendarFragment)
                 }
             })
             viewManager = LinearLayoutManager(context)
@@ -104,5 +110,14 @@ class CalendarFragment(position: Int) : Fragment() {
         intent.putExtra("url", url)
         intent.putExtra("imgUrl", imgUrl)
         this.startActivity(intent)
+    }
+
+    fun ItemLongClick(title: String, url: String, imgUrl: String, act: Fragment){
+        val realm = RealmMethod()
+        if(realm.rExist(true, url)){
+            realm.bkmCreDialog(title, url, imgUrl, act)
+        }else{
+            realm.bkmExistDialog(act)
+        }
     }
 }

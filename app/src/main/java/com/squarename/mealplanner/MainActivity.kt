@@ -1,16 +1,22 @@
 package com.squarename.mealplanner
 
 import android.app.Activity
+import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
+import android.util.Log
 import android.view.Menu
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.FileProvider
 import com.squarename.mealplanner.tflite.Classifier
 import com.squarename.mealplanner.tflite.Classifier.create
 import com.squarename.mealplanner.ui.library.LibraryFragment
@@ -18,15 +24,18 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.squarename.mealplanner.ui.bookmarklist.BkmListFragment
 import com.squarename.mealplanner.ui.diary.DiaryViewPagerFragment
 import com.squarename.mealplanner.ui.recyclerview.RecycleviewFragment
+import java.io.File
 import java.io.FileDescriptor
+import java.io.FileInputStream
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var imageView: ImageView
-    private lateinit var textView: TextView
     private lateinit var classifier: Classifier
     private lateinit var library: LibraryFragment
+    private lateinit var searchView: SearchView
     val RESULT_IMAGEFILE = 1001
     val RESULT_CAMERAFILE = 1002
 
@@ -84,7 +93,7 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.title = ""
         val seachItem = menu.findItem(R.id.menu_search)
-        val searchView = seachItem.actionView as SearchView
+        searchView = seachItem.actionView as SearchView
         searchView.run {
             queryHint = context.getString(R.string.searchHint)
             setIconifiedByDefault(false)
@@ -95,10 +104,14 @@ class MainActivity : AppCompatActivity() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             //検索ボタンを押した
             override fun onQueryTextSubmit(query: String?): Boolean {
+
+                var newquery = query?.replace("　", ",")
+                newquery = newquery?.replace(" ", ",")
+
                 // 検索Fragmentを呼び出す
                 supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.nav_host_fragment, RecycleviewFragment.newInstance(query))
+                    .replace(R.id.nav_host_fragment, RecycleviewFragment.newInstance(newquery))
                     .commit()
                 return true
             }
@@ -122,41 +135,40 @@ class MainActivity : AppCompatActivity() {
         val newRequestCode = requestCode and 0xffff
         lateinit var bmp: Bitmap
         lateinit var results: List<Classifier.Recognition>
-        var text: String? = ""
-        textView = findViewById(R.id.result_textView)
-        imageView = findViewById(R.id.imageView)
+        var resulttext: String? = ""
+        Log.d("existresulutData", resultData.toString())
 
         resultData?.let { resultData ->
             if (resultCode == Activity.RESULT_OK) {
                 //終了リザルトが画像選択アクテビティ
                 if (newRequestCode == RESULT_IMAGEFILE) {
-                    var uri: Uri? = resultData.data
-                    var pfDescriptor = contentResolver.openFileDescriptor(uri!!, "r")
-                    val fileDescriptor: FileDescriptor = pfDescriptor!!.fileDescriptor
-                    bmp = BitmapFactory.decodeFileDescriptor(fileDescriptor)
-                    pfDescriptor.close()
-
+                    var itemcount = resultData?.clipData?.itemCount ?: 0
+                    for (i in 0..itemcount - 1) {
+                        val uri = resultData?.clipData?.getItemAt(i)?.uri
+                        val pfDescriptor = contentResolver.openFileDescriptor(uri!!, "r")
+                        val fileDescriptor: FileDescriptor = pfDescriptor!!.fileDescriptor
+                        bmp = BitmapFactory.decodeFileDescriptor(fileDescriptor)
+                        pfDescriptor.close()
+                        results =
+                            classifier.recognizeImage(bmp, 1)
+                        resulttext += results[0].title + ","
+                    }
                     //終了リザルトがカメラアクテビティ
                 } else if (newRequestCode == RESULT_CAMERAFILE) {
-                    resultData.extras?.let {
-                        bmp = it["data"] as Bitmap
-                    }
+                    resulttext += resultData.getStringExtra("data")
                 }
-                this.imageView.setImageBitmap(resizeImage(bmp))
-                results =
-                    classifier.recognizeImage(resizeImage(bmp), 1)
-                text += results[0].title
-                this.textView.text = text
 
                 // 画像解析の結果で検索Fragmentを呼び出す
                 supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.nav_host_fragment, RecycleviewFragment.newInstance(text))
+                    .replace(R.id.nav_host_fragment, RecycleviewFragment.newInstance(resulttext))
                     .commit()
+                resulttext = resulttext?.replace(",", " ")
+                searchView.setQuery(resulttext, false)
             }
         }
-        this.textView.requestFocus()
     }
+
 
     //ビットマップイメージをリサイズ
     fun resizeImage(bmp: Bitmap): Bitmap {

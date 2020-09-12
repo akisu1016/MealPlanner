@@ -39,11 +39,15 @@ class RecyclerAdapter(
         holder.itemView.setOnClickListener {
             listener.onItemClick(it, position, customList[position].url)
         }
+        holder.itemView.setOnLongClickListener {
+            listener.onItemLongClick(it, position, customList[position].url)
+            true
+        }
     }
 
     //インターフェースの作成
     interface OnItemClickListener {
         fun onItemClick(view: View, position: Int, clickedText: String)
+        fun onItemLongClick(view: View, position: Int, clickedText: String)
     }
-
 }

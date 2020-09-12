@@ -41,7 +41,7 @@ class WebViewActivity : AppCompatActivity() {
                 realm.create(true,webview.title, url,imgUrl)
                 showToast("ブックマークしました")
             }else{
-                realm.delete(true, title)
+                realm.deleteTitle(true, title)
                 showToast("ブックマークを削除しました")
             }
         })

@@ -86,10 +86,21 @@ class RealmMethod {
 //            task.deleteFromRealm()
 //        }
 //    }
-    fun delete(BkmorDia: Boolean, title: String){
+    fun deleteTitle(BkmorDia: Boolean, title: String){
         var task = realm.where(Task::class.java)
             .equalTo("BkmorDia", BkmorDia)
             .equalTo("title",title)
+            .findAll()
+        //削除
+        realm.executeTransaction {
+            task.deleteAllFromRealm()
+        }
+    }
+
+    fun deleteUrl(BkmorDia: Boolean, url: String){
+        var task = realm.where(Task::class.java)
+            .equalTo("BkmorDia", BkmorDia)
+            .equalTo("url",url)
             .findAll()
         //削除
         realm.executeTransaction {

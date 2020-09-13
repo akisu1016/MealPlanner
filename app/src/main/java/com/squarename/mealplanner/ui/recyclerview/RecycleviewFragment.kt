@@ -57,7 +57,7 @@ class RecycleviewFragment : Fragment() {
 
             override fun onResponse(call: Call<List<Recipe>>?, response: Response<List<Recipe>>) {
                 if (response.isSuccessful) {
-                    response.body()?.let {
+                    response.body()?.also {
                         // Log表示(成功)
                         Log.d("fetchRecipe", "response success")
 
@@ -85,11 +85,13 @@ class RecycleviewFragment : Fragment() {
                             }
                         }
                     }
+                    if(response.body().isNullOrEmpty()){
+                        // Log表示(ResponseBodyがない)
+                        Log.d("fetchRecipe", "response code:" + response.code())
+                        Log.d("fetchRecipe", "response errorBody:" + response.errorBody())
+                        root.ExistText.text = "レシピが存在しませんでした"
+                    }
                 }
-                // Log表示(ResponseBodyがない)
-                Log.d("fetchRecipe", "response code:" + response.code())
-                Log.d("fetchRecipe", "response errorBody:" + response.errorBody())
-                root.ExistText.text = "レシピが存在しませんでした"
             }
         })
 

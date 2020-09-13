@@ -16,6 +16,7 @@ import com.squarename.mealplanner.WebViewActivity
 import com.squarename.mealplanner.getrecipe.Recipe
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import com.squarename.mealplanner.rmethods.RealmMethod
+import kotlinx.android.synthetic.main.fragment_recyclerview.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -88,6 +89,7 @@ class RecycleviewFragment : Fragment() {
                 // Log表示(ResponseBodyがない)
                 Log.d("fetchRecipe", "response code:" + response.code())
                 Log.d("fetchRecipe", "response errorBody:" + response.errorBody())
+                root.ExistText.text = "レシピが存在しませんでした"
             }
         })
 

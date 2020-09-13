@@ -16,6 +16,8 @@ import com.squarename.mealplanner.rmethods.RealmMethod
 import com.squarename.mealplanner.ui.recyclerview.RecyclerAdapter
 import android.app.AlertDialog
 import io.realm.Realm
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_recyclerview.view.*
 
 class BkmListFragment: Fragment() {
     var items = listOf<Recipe>()
@@ -36,30 +38,38 @@ class BkmListFragment: Fragment() {
 
         val root = inflater.inflate(R.layout.fragment_recyclerview, container, false)
 
-        viewAdapter = RecyclerAdapter(items, object : RecyclerAdapter.OnItemClickListener{
-            override fun onItemClick(view: View, position: Int, clickedText: String) {
-                val imgUrl = items[position].imgUrl
-                ItemClick(view, position, clickedText, imgUrl)// webviewでのimgUrlの取得方法がわからん過ぎるので無理やり取っておく
-            }
+        if(items.isNotEmpty()){
+            viewAdapter = RecyclerAdapter(items, object : RecyclerAdapter.OnItemClickListener{
+                override fun onItemClick(view: View, position: Int, clickedText: String) {
+                    val imgUrl = items[position].imgUrl
+                    ItemClick(view, position, clickedText, imgUrl)// webviewでのimgUrlの取得方法がわからん過ぎるので無理やり取っておく
+                }
 
-            override fun onItemLongClick(view: View, position: Int, clickedText: String) {
-                val title = items[position].title
-                val imgUrl = items[position].imgUrl
-             ItemLongClick(clickedText,this@BkmListFragment)
-            }
-        })
-        viewManager = LinearLayoutManager(context)
+                override fun onItemLongClick(view: View, position: Int, clickedText: String) {
+                    val title = items[position].title
+                    val imgUrl = items[position].imgUrl
+                    ItemLongClick(clickedText,this@BkmListFragment)
+                }
+            })
+            viewManager = LinearLayoutManager(context)
 
-        with(root) {
-            recyclerView = findViewById<RecyclerView>(R.id.my_recycler_view).apply {
-                // 1.adapterにセット
-                adapter = viewAdapter
-                // 2.LayoutMangerをセット
-                layoutManager = viewManager
+            with(root) {
+                recyclerView = findViewById<RecyclerView>(R.id.my_recycler_view).apply {
+                    // 1.adapterにセット
+                    adapter = viewAdapter
+                    // 2.LayoutMangerをセット
+                    layoutManager = viewManager
+                }
             }
+        }else{
+            root.ExistText.text = "ブックマークに登録されていません"
         }
 
         return root
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
     //リストをクリックしたときの処理

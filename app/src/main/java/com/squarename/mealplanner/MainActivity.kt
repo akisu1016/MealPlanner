@@ -1,35 +1,27 @@
 package com.squarename.mealplanner
 
 import android.app.Activity
-import android.content.ContentValues
-import android.content.Context
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.FileProvider
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.squarename.mealplanner.tflite.Classifier
 import com.squarename.mealplanner.tflite.Classifier.create
-import com.squarename.mealplanner.ui.library.LibraryFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.squarename.mealplanner.ui.bookmarklist.BkmListFragment
 import com.squarename.mealplanner.ui.diary.DiaryViewPagerFragment
+import com.squarename.mealplanner.ui.library.LibraryFragment
 import com.squarename.mealplanner.ui.recyclerview.RecycleviewFragment
-import java.io.File
 import java.io.FileDescriptor
-import java.io.FileInputStream
 import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.*
+import android.view.MenuItem
+import com.squarename.mealplanner.rmethods.RealmMethod
+import com.squarename.mealplanner.rmethods.TestData
 
 
 class MainActivity : AppCompatActivity() {
@@ -70,6 +62,8 @@ class MainActivity : AppCompatActivity() {
 //        val navView: BottomNavigationView = findViewById(R.id.nav_view)
 //        val navController = findNavController(R.id.nav_host_fragment)
 //        navView.setupWithNavController(navController)
+
+        TestData().dataInput()//デモ用データ
 
         // BottomNavigationViewにリスナーを付ける
         val navigation: BottomNavigationView = findViewById(R.id.nav_view)
@@ -127,6 +121,22 @@ class MainActivity : AppCompatActivity() {
             }
         })
         return super.onCreateOptionsMenu(menu)
+    }
+
+    //インフォマーククリックで内部データ削除する
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id: Int = item.getItemId()
+        if (id == R.id.menu_info) {
+            AlertDialog.Builder(this) // FragmentではActivityを取得して生成
+                .setTitle("BookMark")
+                .setMessage("内部のデータをすべて削除しますか？")
+                .setPositiveButton("No", { dialog, which -> })
+                .setNegativeButton("Yes", { dialog, which ->
+                    RealmMethod().deleteAll()
+                })
+                .show()
+        }
+        return true
     }
 
     //別アクティビティから戻ってきたときの処理　リクエストコードで認識する

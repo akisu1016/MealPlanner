@@ -1,10 +1,7 @@
 package com.squarename.mealplanner.rmethods
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.util.Log
-import android.view.Gravity
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import io.realm.Realm
 import java.util.*
@@ -27,12 +24,23 @@ class RealmMethod {
         }
     }
 
+    fun creDiaData(title: String="", url: String="", imgUrl: String="", timeStamp: String=""){
+        realm.executeTransaction{
+            var task = realm.createObject(Task::class.java, UUID.randomUUID().toString())
+            task.BkmorDia = false
+            task.title = title
+            task.url = url
+            task.imgUrl = imgUrl
+            task.timeStamp = timeStamp
+        }
+    }
+
     fun readAll(BkmorDia: Boolean){//true->Bkm,false->Diary
-        var task = realm.where(testTask::class.java)
+        var task = realm.where(Task::class.java)
             .equalTo("BkmorDia",BkmorDia)
             .findAll()
-        val listTask: List<testTask> = task
-        Log.d("InputCheck", listTask.toString())
+        val list: List<Task> = task
+        Log.d("InputCheck", list.toString())
     }
 
     //完全一致するレコードを探す（好きにいじって）
